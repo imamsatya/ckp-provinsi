@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "animate.css": "^3.7.2",
         "vee-validate": "^3.2.5",
         "vuelidate": "^0.7.5",
         "vuetify": "^2.2.15",

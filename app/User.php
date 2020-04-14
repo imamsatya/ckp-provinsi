@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin'
+        'name', 'email', 'password', 'is_admin', 'jabatan_id'
     ];
 
     /**
@@ -36,4 +36,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function jabatan()
+    {
+        return $this->hasOne('App\Jabatan', 'id', 'jabatan_id');
+    }
+
+    public function ratarata()
+    {
+        return $this->hasMany(Ratarata::class);
+    }
+    
 }

@@ -6,9 +6,12 @@
 import Vue from 'vue'
 
 
-  import Vuetify from 'vuetify'
+import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+import 'animate.css'
+import colors from 'vuetify/lib/util/colors'
+Vue.use(colors)
 Vue.use(Vuetify)
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
@@ -41,7 +44,21 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 Vue.component('s-layout', require('./components/UI/SLayout.vue').default);
 Vue.component('s-ckp', require('./components/UI/CKP.vue').default);
+Vue.component('s-ckpbulan', require('./components/UI/CKPbulan.vue').default);
+Vue.component('s-ckpratarata', require('./components/UI/CKPRatarata.vue').default);
+
+Vue.component('s-penilaian', require('./components/UI/Penilaian.vue').default);
+Vue.component('s-settings', require('./components/UI/Settings.vue').default);
+Vue.component('s-about', require('./components/UI/About.vue').default);
 Vue.component('s-footer', require('./components/UI/Footer.vue').default);
+
+
+// Vue.component('s-layout', () => import('./components/UI/SLayout.vue'));
+// Vue.component('s-ckp', () => import('./components/UI/CKP.vue'));
+// Vue.component('s-ckpbulan', () => import('./components/UI/CKPbulan.vue'));
+// Vue.component('s-penilaian', () => import('./components/UI/Penilaian.vue'));
+// Vue.component('s-about', () => import('./components/UI/About.vue'));
+// Vue.component('s-footer', () => import('./components/UI/Footer.vue'));
 
 
 // window.Vue.component('s-layout', SLayout)

@@ -19,9 +19,12 @@ class CreateCkpsTable extends Migration
             $table->string('uraian_kegiatan');
             $table->string('satuan');
             $table->string('target_kuantitas');
+            $table->string('realisasi')->nullable();
+            $table->double('kualitas')->nullable();
             $table->string('kode_butir_kegiatan')->nullable();
             $table->string('angka_kredit')->nullable();
             $table->string('keterangan')->nullable();
+            $table->string('bulan')->nullable();
             $table->timestamps();
         });
 

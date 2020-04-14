@@ -22,7 +22,8 @@ const ckpt = {
           target_kuantitas: '',
           kode_butir_kegiatan: '',
           angka_kredit: '',
-          keterangan:''
+          keterangan:'',
+          bulan: ''
     }
 }
 

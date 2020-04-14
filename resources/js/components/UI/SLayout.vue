@@ -1,7 +1,8 @@
 <template>
     <v-app id="inspire">
         <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
-            <v-list dense>
+            <v-list dense v-if="role != 6">
+
                 <template v-for="item in items">
                     <v-row v-if="item.heading" :key="item.heading" align="center">
                         <v-col cols="6">
@@ -14,129 +15,160 @@
                         </v-col>
                     </v-row>
                     <v-list-group v-if="item.children" :key="item.text" v-model="item.model"
-                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="">
+                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" color="primary">
                         <template v-slot:activator>
                             <v-list-item-content>
                                 <v-list-item-title>
-                                   {{ item.text }} a
+                                    {{ item.text }}
                                 </v-list-item-title>
                             </v-list-item-content>
                         </template>
-                        <v-list-item v-for="(child, i) in item.children" :key="i" link>
+                        <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
                             <v-list-item-action v-if="child.icon">
-                                <v-icon>{{ child.icon }}</v-icon>
+                                <v-icon color="amber darken-3">{{ child.icon }}</v-icon>
                             </v-list-item-action>
                             <v-list-item-content>
                                 <v-list-item-title>
-                                    {{ child.text }}
+                                    {{ child.text }}    
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-group>
-                    
+
                     <v-list-item v-else :key="item.text" link @click="goTo(item)">
                         <v-list-item-action>
-                            <v-icon>{{ item.icon }}</v-icon> 
+                            <v-icon color="amber darken-3">{{ item.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title>
-                            {{ item.text }}  b
+                                {{ item.text }}
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </template>
             </v-list>
+
+            <v-list dense v-if="role == 6">
+
+                <template v-for="item in items2">
+                    <v-row v-if="item.heading" :key="item.heading" align="center">
+                        <v-col cols="6">
+                            <v-subheader v-if="item.heading">
+                                {{ item.heading }} asdads
+                            </v-subheader>
+                        </v-col>
+                        <v-col cols="6" class="text-center">
+                            <a href="#!" class="body-2 black--text">EDIT</a>
+                        </v-col>
+                    </v-row>
+                    <v-list-group v-if="item.children" :key="item.text" v-model="item.model"
+                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" color="primary" value="true">
+                            <template v-slot:activator>
+
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            {{ item.text }}
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                            </template>
+                            <!-- <v-list-group no-action  value="true"> -->
+                            
+                            <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
+                                
+                                <v-list-item-action v-if="child.icon">
+                                    <v-icon>{{ child.icon }}</v-icon>
+                                </v-list-item-action>
+                                <v-list-item-content>
+                                    <v-list-item-title>
+                                        {{ child.text }}
+                                    </v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        <!-- </v-list-group> -->
+                    </v-list-group>
+
+                        <v-list-item v-else :key="item.text" link @click="goTo(item)">
+                            <v-list-item-action>
+                                <v-icon>{{ item.icon }}</v-icon>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    {{ item.text }}
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                </template>
+            </v-list>
+
         </v-navigation-drawer>
 
-        <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
+        <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="primary" dark>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
             <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
                 <span class="hidden-sm-and-down">CKP Banget Deh</span>
             </v-toolbar-title>
-            <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Search"
-                class="hidden-sm-and-down" />
+            <!-- <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Search"
+                class="hidden-sm-and-down" /> -->
             <v-spacer />
-            <v-btn icon>
+            <!-- <v-btn icon>
                 <v-icon>mdi-apps</v-icon>
             </v-btn>
             <v-btn icon>
                 <v-icon>mdi-bell</v-icon>
-            </v-btn>
-            <v-btn icon large>
-                <v-avatar size="32px" item>
-                    <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
-                </v-avatar>
-            </v-btn>
-        </v-app-bar>
-        <v-content>
-            <v-container >
-                <!-- <v-row align="center" justify="center">
-                    <v-tooltip right>
-                        <template v-slot:activator="{ on }">
-                            <v-btn :href="source" icon large target="_blank" v-on="on">
-                                <v-icon large>mdi-code-tags</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Source</span>
-                    </v-tooltip>
-                    <v-tooltip right>
-                        <template v-slot:activator="{ on }">
-                            <v-btn icon large href="https://codepen.io/johnjleider/pen/MNYLdL" target="_blank"
-                                v-on="on">
-                                <v-icon large>mdi-codepen</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Codepen</span>
-                    </v-tooltip>
-                </v-row> -->
+            </v-btn> -->
+            <v-menu transition="slide-y-reverse-transition">
+                <template v-slot:activator="{ on }">
 
-              <slot></slot>
+                    <v-btn rounded color="white primary--text" class="ma-2 text-capitalize" v-on="on">
+                        <v-icon left>mdi-chevron-down</v-icon>{{user.name}}
+                    </v-btn>
+                </template>
+                <v-list>
+
+                    <v-list-item link @click="logout()">
+                        <v-list-item-action>
+                            <v-icon>mdi-logout</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                Logout
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+
+
+            </v-menu>
+        </v-app-bar>
+        <v-content class="grey lighten-3">
+
+            <v-container>
+
+
+                <slot></slot>
 
             </v-container>
+
+
+
         </v-content>
-        <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">
-            <v-icon>mdi-plus</v-icon>
-        </v-btn>
-        <v-dialog v-model="dialog" width="800px">
-            <v-card>
-                <v-card-title class="grey darken-2">
-                    Create contact
-                </v-card-title>
-                <v-container>
-                    <v-row class="mx-2">
-                        <v-col class="align-center justify-space-between" cols="12">
-                            <v-row align="center" class="mr-0">
-                                <v-avatar size="40px" class="mx-3">
-                                    <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt="">
-                                </v-avatar>
-                                <v-text-field placeholder="Name" />
-                            </v-row>
-                        </v-col>
-                        <v-col cols="6">
-                            <v-text-field prepend-icon="mdi-account-card-details-outline" placeholder="Company" />
-                        </v-col>
-                        <v-col cols="6">
-                            <v-text-field placeholder="Job title" />
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field prepend-icon="mdi-mail" placeholder="Email" />
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field type="tel" prepend-icon="mdi-phone" placeholder="(000) 000 - 0000" />
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field prepend-icon="mdi-text" placeholder="Notes" />
-                        </v-col>
-                    </v-row>
-                </v-container>
-                <v-card-actions>
-                    <v-btn text color="primary">More</v-btn>
-                    <v-spacer />
-                    <v-btn text color="primary" @click="dialog = false">Cancel</v-btn>
-                    <v-btn text @click="dialog = false">Save</v-btn>
-                </v-card-actions>
+        <v-footer class="justify-center pl-0" padless inset app color="primary" dark>
+            <v-card flat tile class="white--text text-center" color="primary" dark>
+                <v-card-text class="white--text">
+                    <p>Luaskan ilmu, luaskan manfaat <br>
+
+                        [ ] dengan <span class="red--text animated 2s infinite fadeIn"> ❤ </span>
+                        <!-- <q-spinner-hearts class="animated 2s infinite fadeIn" color="red" size="2.5em" /> -->
+                        di Palu</p>
+                    ©2020 — Imam Satya Wedhatama
+
+
+                    <!-- {{ new Date().getFullYear() }} — <strong>Vuetify</strong> -->
+                </v-card-text>
             </v-card>
-        </v-dialog>
+        </v-footer>
+
+
     </v-app>
 </template>
 
@@ -148,56 +180,99 @@
         data: () => ({
             dialog: false,
             drawer: null,
+            user: '',
+            role: '',
             items: [{
-                    icon: 'mdi-contacts',
+                    icon: 'mdi-chevron-up',
+                    'icon-alt': 'mdi-chevron-down',
                     text: 'CKP',
-                    route: '/home'
+                    model: false,
+                    children: [{
+                            text: 'Form CKP',
+                            icon: 'mdi-clipboard-text',
+                            route: '/home'
+                        },
+                        {
+                            text: 'CKP Setiap Bulan',
+                            icon: 'mdi-calendar-range',
+                            route: '/ckp_bulan'
+                        },
+                        {
+                            text: 'Rekap Nilai CKP',
+                            icon: 'mdi-numeric-9-plus-box-multiple-outline',
+                            route: '/ckp_ratarata'
+                        },
+
+                    ],
+                },
+                {
+                    icon: 'mdi-sticker-check',
+                    text: 'Penilaian',
+                    route: '/penilaian',
+                },
+                {
+                    icon: 'mdi-settings',
+                    text: 'Settings',
+                    route: '/settings'
+                },
+                {
+                    icon: 'mdi-information',
+                    text: 'About',
+                    route: '/about'
                 },
                 // {
-                //     icon: 'mdi-history',
-                //     text: 'Frequently contacted',
-                //     route: '/home'
+                //     icon: 'mdi-message',
+                //     text: 'Send feedback'
                 // },
                 // {
-                //     icon: 'mdi-content-copy',
-                //     text: 'Duplicates'
+                //     icon: 'mdi-help-circle',
+                //     text: 'Help'
                 // },
                 // {
-                //     icon: 'mdi-chevron-up',
-                //     'icon-alt': 'mdi-chevron-down',
-                //     text: 'Labels',
-                //     model: true,
-                //     children: [{
-                //         icon: 'mdi-plus',
-                //         text: 'Create label'
-                //     }, ],
+                //     icon: 'mdi-cellphone-link',
+                //     text: 'App downloads'
                 // },
                 // {
-                //     icon: 'mdi-chevron-up',
-                //     'icon-alt': 'mdi-chevron-down',
-                //     text: 'More',
-                //     model: false,
-                //     children: [{
-                //             text: 'Import'
-                //         },
-                //         {
-                //             text: 'Export'
-                //         },
-                //         {
-                //             text: 'Print'
-                //         },
-                //         {
-                //             text: 'Undo changes'
-                //         },
-                //         {
-                //             text: 'Other contacts'
-                //         },
-                //     ],
+                //     icon: 'mdi-keyboard',
+                //     text: 'Go to the old version'
                 // },
-                // {
-                //     icon: 'mdi-settings',
-                //     text: 'Settings'
-                // },
+            ],
+
+            //staff
+            items2: [{
+                    icon: 'mdi-chevron-up',
+                    'icon-alt': 'mdi-chevron-down',
+                    text: 'CKP',
+                    model: false,
+                    children: [{
+                            text: 'Form CKP',
+                            icon: 'mdi-clipboard-text',
+                            route: '/home'
+                        },
+                        {
+                            text: 'CKP Setiap Bulan',
+                            icon: 'mdi-calendar-range',
+                            route: '/ckp_bulan'
+                        },
+                         {
+                            text: 'Rekap Nilai CKP',
+                            icon: 'mdi-numeric-9-plus-box-multiple-outline',
+                            route: '/ckp_ratarata'
+                        },
+
+                    ],
+                },
+
+                {
+                    icon: 'mdi-settings',
+                    text: 'Settings',
+                    route: '/settings'
+                },
+                {
+                    icon: 'mdi-information',
+                    text: 'About',
+                    route: '/about'
+                },
                 // {
                 //     icon: 'mdi-message',
                 //     text: 'Send feedback'
@@ -217,11 +292,37 @@
             ],
         }),
         methods: {
-            goTo(item){
+            goTo(item) {
                 // console.log(item.route)
-                window.location.href= item.route
+                window.location.href = item.route
+            },
+            async logout() {
+                await axios.get('/logout')
+                window.location.href = "/"
+
+            },
+            async get_user() {
+                await axios.get('/get_user').then(response => {
+
+                    //Logic goes here
+                    this.tes = response.data
+
+
+                }).catch(error => {
+                    alert(error);
+                });
+                this.user = this.tes[0]
+                this.role = this.tes[1]
+                console.log(this.user.name)
             }
-        }
+        },
+        beforeMount() {
+            console.log('halo')
+            this.get_user()
+
+
+        },
+
 
     }
 

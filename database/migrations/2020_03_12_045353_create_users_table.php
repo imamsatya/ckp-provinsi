@@ -31,7 +31,8 @@ class CreateUsersTable extends Migration
             // $table->boolean('is_kasie')->nullable();
             // $table->boolean('is_staf')->nullable();
             // $table->string('jabatan_id')->nullable();
-            // $table->string('atasan_id')->nullable();
+            $table->string('nip_pendek')->nullable();
+            $table->string('nip_panjang')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -12,4 +12,6 @@ class Jabatan extends Model
     protected $fillable = [
         'jabatan_kantor', 'role', 'created_at'
     ];
+    
+    
 }
