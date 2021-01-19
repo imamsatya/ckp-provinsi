@@ -24,9 +24,9 @@
 {{-- <button type="submit" class="btn btn-primary">
     <a href="{{ route('download_excel') }}">asdad</a>
  </button> --}}
-<s-layout>
-    <s-ckp :ckpt="{{$ckpt}}" :daftar_bulan="{{$daftar_bulan}}"></s-ckp >
-</s-layout>
+        <s-layout>
+            <s-ckp :ckpt="{{$ckpt}}" :daftar_bulan="{{$daftar_bulan}}" :user="{{$user}}"></s-ckp >
+        </s-layout>
 {{-- <example-component></example-component> --}}
 @endsection
 

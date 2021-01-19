@@ -1,13 +1,13 @@
 <template>
     <div>
         <v-container>
-            <v-card elevation=8 class="pa-md-4 mx-lg-auto">
+            <v-card elevation=8 class=" pa-md-4 mx-lg-auto">
                 <v-select :items="pilihan_bulan" label="Bulan" v-model="bulan" @input="pilihBulan(bulan)"></v-select>
             </v-card>
         </v-container>
 
         <v-container>
-            <v-card elevation=8 class="pa-md-4 mx-lg-auto">
+            <v-card  elevation=8 class="rounded-card pa-md-4 mx-lg-auto">
                 
                 <v-card-title class="primary--text">
                         <v-icon large color="primary">mdi-clipboard-text</v-icon>Form CKP
@@ -15,8 +15,11 @@
 
                 </v-card-title>
                 <v-row>
-
+                  <!-- {{this.user.jabatan_id}} -->
                     <v-col cols="12" md="6">
+                        <v-select v-if="this.user.jabatan_id == 2" v-model="jenis_bidang" :items="bidang" :error-messages="jenis_bidangErrors"
+                            label="Kegiatan Bidang *" required @change="$v.jenis_bidang.$touch()"
+                            @blur="$v.jenis_bidang.$touch()"></v-select>
 
                         <v-select v-model="jenis_kegiatan" :items="items" :error-messages="jenis_kegiatanErrors"
                             label="Jenis Kegiatan *" required @change="$v.jenis_kegiatan.$touch()"
@@ -24,9 +27,9 @@
 
                         <v-text-field v-model="uraian_kegiatan" :error-messages="uraian_kegiatanErrors"
                             label="Uraian Kegiatan *" required @input="$v.uraian_kegiatan.$touch()"
-                            @blur="$v.uraian_kegiatan.$touch()"></v-text-field>
+                            @blur="$v.uraian_kegiatan.$touch()"  autocomplete="on">></v-text-field>
 
-                        <v-text-field v-model="satuan" :error-messages="satuanErrors" label="Satuan *" required
+                        <v-text-field v-model="satuan" :error-messages="satuanErrors" label="Satuan *" cache-items autocomplete="on" required
                             @input="$v.satuan.$touch()" @blur="$v.satuan.$touch()"></v-text-field>
 
                         <v-text-field v-model="target_kuantitas" :error-messages="target_kuantitasErrors"
@@ -57,7 +60,7 @@
                          <v-icon left>mdi-eraser</v-icon>
                          clear
                     </v-btn>
-                    <v-btn class="mr-4" color="primary" tile outlined @click="submit">
+                    <v-btn :disabled="disable" class="mr-4" color="primary" tile outlined @click="submit">
                          <v-icon left>mdi-send</v-icon>submit</v-btn>
                 </v-row>
             </v-card>
@@ -69,7 +72,7 @@
 
         <v-container fluid>
 
-            <v-card class="pa-md-4 mx-lg-auto raised" elevation=8>
+            <v-card class="pa-md-4 mx-lg-auto raised " elevation=8>
                 <v-row dense>
 
 
@@ -93,13 +96,13 @@
                         </v-card-subtitle> -->
                         <v-card-title>
 
-                            <v-btn small class="ma-2" tile outlined color="primary" @click="realisasiDialog()">
+                            <v-btn :disabled="disable" small class="ma-2" tile outlined color="primary" @click="realisasiDialog()">
                                 <v-icon left>mdi-pencil</v-icon> Realisasi
                             </v-btn>
                             <v-btn small class="ma-2" tile outlined color="success" @click="downloadExcel()">
                                 <v-icon left>mdi-file-excel</v-icon> Download Excel
                             </v-btn>
-                            <v-btn small class="ma-2" tile outlined color="primary" @click="copyCkp()">
+                            <v-btn :disabled="disable" small class="ma-2" tile outlined color="primary" @click="copyCkp()">
                                 <v-icon left>mdi-content-copy</v-icon> Copy ?
                             </v-btn>
                             <v-spacer></v-spacer>
@@ -111,16 +114,35 @@
                         <!-- <p>Nilai CKP : {{ratarata_ckp}} </p> -->
                         <!-- {{ this.ckpt_view }} -->
                         <!-- loading loading-text="Loading... Please wait" -->
+                        <v-alert
+      v-model="copyAlert"
+      border="left"
+      close-text="Close Alert"
+      
+      dark
+      dismissible
+      dense
+      text
+      type="success"
+    >
+     Yeay, Copy Berhasil :)
+    </v-alert>
                         <v-data-table :headers="headers" :items="ckpt_view" class="elevation-1" :search="search">
                             <template v-slot:item.aksi="{ item }">
-
-                                <v-btn color="primary" fab x-small dark @click="editDialog(item)">
+                                <div v-if="disable==false">
+                                <v-btn  color="primary" fab x-small dark @click="editDialog(item)">
                                     <v-icon small @click="editDialog(item)">mdi-pencil</v-icon>
                                 </v-btn>
 
                                 <v-btn color="error" fab x-small dark @click="deleteDialog(item)">
                                     <v-icon small @click="deleteDialog(item)">mdi-delete</v-icon>
                                 </v-btn>
+                                </div>
+                                <div v-else>
+                                    <!-- <v-btn color="primary" fab x-small dark > -->
+                                    <v-icon small >mdi-lock</v-icon>
+                                <!-- </v-btn> -->
+                                </div>
                             </template>
                             <template v-slot:item.jenis_kegiatan="{ item }">
 
@@ -147,10 +169,18 @@
                                 {{ item.realisasi }}
                             </template>
 
+                            <template v-slot:item.persentase="{ item }">
+                                
+                                {{persentase(item)}}
+                               <!-- {{item.realisasi/item.target_kuantitas*100 + '%'}} -->
+                            </template>
+
                             <template v-slot:item.kualitas="{ item }">
 
                                 {{ item.kualitas }}
                             </template>
+
+                            
 
                             <template v-slot:item.kode_butir_kegiatan="{ item }">
 
@@ -216,10 +246,15 @@
                         <v-row>
 
                             <v-col cols="12" sm="6">
+
+                                <v-select v-if="this.user.jabatan_id == 2" v-model="edited_jenis_bidang" :items="bidang" :error-messages="edited_jenis_bidangErrors"
+                            label="Kegiatan Bidang *" required @change="$v.edited_jenis_bidang.$touch()"
+                            @blur="$v.edited_jenis_bidang.$touch()"></v-select>
+
                                 <v-select v-model="edited_jenis_kegiatan" :items="items"
                                     :error-messages="edited_jenis_kegiatanErrors" label="Jenis Kegiatan *" required
                                     @change="$v.edited_jenis_kegiatan.$touch()"
-                                    @blur="$v.edited_jenis_kegiatan.$touch()"></v-select>
+                                    @blur="$v.edited_jenis_kegiatan.$touch()" ></v-select>
 
                                 <v-text-field v-model="edited_uraian_kegiatan"
                                     :error-messages="edited_uraian_kegiatanErrors" label="Uraian Kegiatan *" required
@@ -267,7 +302,7 @@
                     <v-toolbar-title>Realisasi CKP {{this.bulan}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark text @click="submitRealissai()" >Save</v-btn>
+                        <v-btn  dark text @click="submitRealissai()" >Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-list three-line subheader v-for="(item, index) in this.ckpt_view" :key="index">
@@ -324,8 +359,15 @@
                                             @blur="$v.edited_target_kuantitas.$touch()"></v-text-field> -->
                                     </v-col>
                                     <v-col cols="12" sm="6">
+                                         <v-list-item-content>
+                                            <v-list-item-title>Persentase</v-list-item-title>
+                                            <v-list-item-subtitle>{{persentase(item)}}</v-list-item-subtitle>
+                                        </v-list-item-content>
+
                                         <v-text-field v-model="item.realisasi" label="Realisasi">
                                         </v-text-field>
+
+
 
                                        
 
@@ -349,7 +391,7 @@
         </v-dialog>
 
         <!-- copy -->
-        <v-dialog v-model="copy_dialog" max-width="290">
+        <v-dialog v-model="copy_dialog" persistent max-width="290">
             
             <v-card>
                 <v-container>
@@ -366,6 +408,29 @@
 
                     <v-btn color="green darken-1" text @click="submitCopy(bulan_copy)">
                         Copy :)
+                    </v-btn>
+                </v-card-actions>
+                </v-container>
+            </v-card>
+        </v-dialog>
+
+         <v-dialog v-model="alertTtd" max-width="290">
+            
+            <v-card>
+                <v-container>
+                <v-card-title class="headline">Pengumuman</v-card-title>
+                Halo semuanya, jangan lupa untuk upload scan tanda tangan dengan format .png di menu settings. Terima kasih, selamat beraktivitas :)
+               <!-- <v-select :items="daftar_bulan_view" label="Bulan" v-model="bulan_copy" @input="pilihBulan(bulan_copy)"></v-select> -->
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn color="red darken-1" text @click="alertTtd = false">
+                        Close
+                    </v-btn> 
+
+                    <v-btn color="green darken-1" text @click="goTo()">
+                        Settings
                     </v-btn>
                 </v-card-actions>
                 </v-container>
@@ -393,7 +458,7 @@
     } from 'vuelidate/lib/validators'
 
     export default {
-        props: ['ckpt', 'daftar_bulan'],
+        props: ['ckpt', 'daftar_bulan', 'user'],
         mixins: [validationMixin],
 
         validations: {
@@ -408,6 +473,9 @@
             email: {
                 required,
                 email
+            },
+            jenis_bidang:{
+                required
             },
             jenis_kegiatan: {
                 required
@@ -433,6 +501,9 @@
             edited_jenis_kegiatan: {
                 required
             },
+            edited_jenis_bidang:{
+                required
+            },
             edited_satuan: {
                 required
             },
@@ -447,8 +518,26 @@
         },
 
         data: () => ({
+
+            //disable
+            disable: false,
+
+            //bidang
+            bidang: [
+                'Tata Usaha (TU)',
+                'Statistik Sosial (Sosial)',
+                'Statistik Produksi (Produksi)',
+                'Statistik Distribusi (Distribusi)',
+                'Neraca Wilayah dan Analisis Statistik (Neraca)',
+                'Integrasi Pengolahan dan Diseminasi Statistik (IPDS)'
+
+            ],
+            jenis_bidang: '',
+
+
             //copy
             copy_dialog: '',
+            copyAlert: false,
             bulan_copy: '',
             daftar_bulan_view:[],
 
@@ -467,7 +556,8 @@
             edit_dialog: '',
 
             selected_item: '',
-
+            
+            edited_jenis_bidang: '',
             edited_jenis_kegiatan: null,
             edited_uraian_kegiatan: '',
             edited_satuan: '',
@@ -501,6 +591,7 @@
 
             //notif
             snackbar: false,
+            alertTtd: false,
             text: 'Ada error',
             timeout: 2000,
 
@@ -534,6 +625,11 @@
                     value: 'realisasi'
                 },
                 {
+                    text: 'Persentase',
+                    value: 'persentase'
+                   
+                },
+                {
                     text: 'Kualitas',
                     value: 'kualitas'
                 },
@@ -558,8 +654,98 @@
             ],
 
         }),
+        mounted(){
+            console.log('mount')
+            console.log('bulan', this.bulan)
+            this.alertTtd = true
+
+             
+            
+        },
+        watch:{
+            bulan: function (){
+                            var d = new Date();
+                 var date = d.getDate();
+            var year = d.getFullYear();
+
+            var month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+            console.log('subtring', this.bulan.substring(-5, this.bulan.length-4))
+            console.log('date', date)
+            var selectedMonth = this.bulan.substring(-5, this.bulan.length-5)
+            
+            
+            switch (selectedMonth) {
+                case 'Januari':
+                    selectedMonth = 1
+                    break;
+
+                case 'Februari':
+                    selectedMonth = 2
+                    break;
+
+                case 'Maret':
+                    selectedMonth = 3
+                    break;
+
+                case 'April':
+                    selectedMonth = 4
+                    break;
+
+                case 'Mei':
+                    selectedMonth = 5
+                    break;
+
+                case 'Juni':
+                    selectedMonth = 6
+                    break;
+
+                case 'Juli':
+                    selectedMonth = 7
+                    break;
+
+                case 'Agustus':
+                    selectedMonth = 8
+                    break;
+
+                case 'September':
+                    selectedMonth = 9
+                    break;
+
+                case 'Oktober':
+                    selectedMonth = 10
+                    break;
+
+                case 'November':
+                    selectedMonth = 11
+                    break;
+
+                case 'Desember':
+                    selectedMonth = 12
+                    break;
+
+
+
+
+                default:
+                    break;
+            }
+           console.log('month', month, 'current Month', selectedMonth)
+        //    if ((date >= 15 &&  selectedMonth < month) || selectedMonth < month) {
+            if ((date >= 15 &&  selectedMonth < month) ) {
+                this.disable = true
+                console.log('disable true')
+            } else {
+                 this.disable = false
+            }
+
+         
+                 
+        }
+        },
+
 
         computed: {
+            
             // variabel ckpt
             jenis_kegiatan_x: {
                 set(val) {
@@ -631,6 +817,12 @@
         !this.$v.checkbox.checked && errors.push('You must agree to continue!')
         return errors
       },
+      jenis_bidangErrors () {
+        const errors = []
+        if (!this.$v.jenis_bidang.$dirty) return errors
+        !this.$v.jenis_bidang.required && errors.push('Jenis bidang jangan lupa diisi')
+        return errors
+      },
       jenis_kegiatanErrors () {
         const errors = []
         if (!this.$v.jenis_kegiatan.$dirty) return errors
@@ -664,6 +856,12 @@
         if (!this.$v.name.$dirty) return errors
         !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
         !this.$v.name.required && errors.push('Name is required.')
+        return errors
+      },
+       edited_jenis_bidangErrors () {
+        const errors = []
+        if (!this.$v.edited_jenis_bidang.$dirty) return errors
+        !this.$v.edited_jenis_bidang.required && errors.push('Jenis kegiatan jangan lupa diisi')
         return errors
       },
 
@@ -706,6 +904,20 @@
         },
 
         methods: {
+            goTo() {
+                // console.log(item.route)
+                window.location.href = '/settings'
+            },
+
+            persentase(item){
+                
+                var a = item.realisasi/item.target_kuantitas*100 
+                if (a > 100) {
+                    a = 100
+                }
+                return a
+            
+            },
             async submitCopy(bulan){
                 console.log(this.bulan)
                 await axios.post('/copy_ckp' , {
@@ -713,16 +925,21 @@
                     bulan: this.bulan
                 }) 
                 this.copy_dialog = false;
-                this.ratarata();
+                this.copyAlert = true
+               await this.pilihBulan(this.bulan)
+               await this.ratarata()
+               
             },
             copyCkp(){
                 this.copy_dialog = true;
             },
             async downloadExcel(){
                 console.log(this.ckpt_view)
+                // console.log(this.ckpt_view[0].id) 
                 await axios.post('/download_excel' , {
                     ckp: this.ckpt_view
-                }) 
+                })
+                
                  window.location.href = "/download_excel/"+this.ckpt_view[0].id
             },
             async submitRealissai(){
@@ -731,7 +948,7 @@
                  await axios.post('ckp/realisasi' , {
                     ckp: this.ckpt_view
                 })
-                this.ratarata()
+                await this.ratarata()
               
               
             },
@@ -746,6 +963,9 @@
             async updateCkp() {
                 this.edit_dialog = false
                 var item = this.selected_item
+                if (this.user.jabatan_id == 2) {
+                    this.edited_uraian_kegiatan = this.edited_jenis_bidang+ ' - '+this.edited_uraian_kegiatan
+                }
                 await axios.post('/ckp/update/' + item.id, {
                     id: item.id,
                     edited_ckp: [{
@@ -763,13 +983,14 @@
                 })
 
                 await this.pilihBulan(this.bulan)
-                this.ratarata()
+                await this.ratarata()
 
             },
             editDialog(item) {
                 this.selected_item = item
                 console.log('ts', this.selected_item.jenis_kegiatan)
 
+                
                 this.edited_jenis_kegiatan = this.selected_item.jenis_kegiatan
                 this.edited_uraian_kegiatan = this.selected_item.uraian_kegiatan
                 this.edited_satuan = this.selected_item.satuan
@@ -777,6 +998,15 @@
                 this.edited_kode_butir_kegiatan = this.selected_item.kode_butir_kegiatan
                 this.edited_angka_kredit = this.selected_item.angka_kredit
                 this.edited_keterangan = this.selected_item.keterangan
+
+                if (this.user.jabatan_id == 2) {
+                    var n = this.selected_item.uraian_kegiatan.indexOf(" - ")
+                    this.edited_jenis_bidang = this.selected_item.uraian_kegiatan.substring(0, n)
+                    console.log(this.edited_jenis_bidang)
+
+                    this.edited_uraian_kegiatan = this.selected_item.uraian_kegiatan.substring(n+3)
+                    console.log('edited uraian', this.edited_uraian_kegiatan)
+                }
 
                 this.edit_dialog = true
             },
@@ -796,7 +1026,7 @@
                 .then()
                 this.ckpt_view = this.tes[0];
                 console.log('tes', this.tes[0])
-                  this.ratarata()
+                await  this.ratarata()
 
             },
             deleteDialog(item) {
@@ -806,7 +1036,7 @@
 
 
             },
-            delete_ckp() {
+            async delete_ckp() {
                 var item = this.selected_item
                 console.log(item)
 
@@ -834,9 +1064,11 @@
                     }
                 }
                 this.delete_dialog = false
-                this.ratarata()
+               await this.ratarata()
             },
             async submit() {
+                
+
                 this.$v.$touch()
                 if (
                     this.jenis_kegiatan === null ||
@@ -848,8 +1080,19 @@
                     this.snackbar = true
 
                 } else {
+                    
                     this.jenis_kegiatan_x = this.jenis_kegiatan
-                    this.uraian_kegiatan_x = this.uraian_kegiatan
+
+                    
+
+                    
+                    
+                    if (this.user.jabatan_id == 2) {
+                        this.uraian_kegiatan_x = this.jenis_bidang+ ' - '+this.uraian_kegiatan
+                    }else{
+                        this.uraian_kegiatan_x = this.uraian_kegiatan
+                    }
+
                     this.satuan_x = this.satuan
                     this.target_kuantitas_x = this.target_kuantitas
                     this.kode_butir_kegiatan_x = this.kode_butir_kegiatan
@@ -881,6 +1124,7 @@
             },
             async ratarata(){
                 var rata=0
+                var rata_temp=0
                 console.log('count', this.ckpt_view.length)
                 if ( this.ckpt_view.length == 0) {
                     this.ratarata_ckp = 0
@@ -899,7 +1143,11 @@
                         }
                         
                     console.log(element)
-                    rata = rata + ((parseInt(element.realisasi) / parseInt(element.target_kuantitas) * 100) + parseInt(element.kualitas) ) / 2
+                    rata_temp = (parseInt(element.realisasi) / parseInt(element.target_kuantitas))
+                    if (rata_temp >= 1) {
+                        rata_temp = 1
+                    }
+                    rata = rata + (( rata_temp * 100) + parseInt(element.kualitas) ) / 2
                     console.log('x',rata);
                 });
                     console.log('rata a',rata);
@@ -994,6 +1242,10 @@
                     month2 = 'Desember'
                     break;
 
+                case 13:
+                    month2 = 'Januari'
+                    break;
+
 
 
 
@@ -1022,6 +1274,10 @@
 
 
             switch (month1) {
+                case 0:
+                    month1 = 'Desember'
+                    year1 = year1-1
+                    break;
                 case 1:
                     month1 = 'Januari'
                     break;
@@ -1068,6 +1324,10 @@
 
                 case 12:
                     month1 = 'Desember'
+                    break;
+
+                case 13:
+                    month1 = 'Januari'
                     break;
 
 
@@ -1126,6 +1386,12 @@
                     month3 = 'Desember'
                     break;
 
+                 case 13:
+                    month3 = 'Januari'
+                    year3 = year3 + 1
+                    break;
+
+
 
 
 
@@ -1143,6 +1409,7 @@
             this.bulan = this.pilihan_bulan[1]
             this.pilihBulan(this.bulan)
             console.log(this.bulan)
+            console.log('user',this.user)
               this.ratarata()
         },
     }

@@ -41,32 +41,33 @@ class KasieController extends Controller
 
             //kabid TU
             case 'Kepala Bagian Tata Usaha':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [9,10,11,12,13])->get();
+                //$daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,9,10,11,12,13])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,9,10,11,12,13, 30])->get();
             break;
                         
             //kabid Sosial
             case 'Kepala Bidang Statistik Sosial':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [14,15,16])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,14,15,16,49])->get();
             break;
 
             //kabid Produksi
             case 'Kepala Bidang Statistik Produksi':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [17,18,19])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,17,18,19])->get();
             break;
 
             //kabid Distribusi
             case 'Kepala Bidang Statistik Distribusi':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [20,21,22])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,20,21,22,50])->get();
             break;
 
             //kabid Neraca
             case 'Kepala Bidang Neraca Wilayah dan Analisis Statistik':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [23,24,25])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,23,24,25])->get();
             break;
 
             //kabid IPDS
             case 'Kepala Bidang Statistik Integrasi Pengolahan dan Diseminasi Statistik':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [26,27,28])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,26,27,28])->get();
             break;
 
             //=============================================//
@@ -102,7 +103,7 @@ class KasieController extends Controller
             $daftar_pegawai = $daftar_pegawai->where('jabatan_id', 35)->get();
             break;
 
-            case 'Kepala Seksi Statistik Ketahanan Sosial':
+            case 'Kepala Seksi Statistik Kesejahteraan Rakyat':
             $daftar_pegawai = $daftar_pegawai->where('jabatan_id', 36)->get();
             break;
             //kasie Produksi
@@ -153,7 +154,7 @@ class KasieController extends Controller
             $daftar_pegawai = $daftar_pegawai->where('jabatan_id', 47)->get();
             break;
 
-            case 'Kepala Seksi  Diseminasi dan Layanan Statistik':
+            case 'Kepala Seksi Diseminasi dan Layanan Statistik':
             $daftar_pegawai = $daftar_pegawai->where('jabatan_id', 48)->get();
             break;
 

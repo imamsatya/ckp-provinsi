@@ -136,6 +136,11 @@
                                 {{ item.target_kuantitas }}
                             </template>
 
+                             <template v-slot:item.persentase="{ item }">
+
+                                {{ persentase(item) }}
+                            </template>
+
                             <template v-slot:item.kode_butir_kegiatan="{ item }">
 
                                 {{ item.kode_butir_kegiatan }}
@@ -287,7 +292,7 @@
 
                                     </v-col>
                                     <v-col cols="12" sm="6">
-                                        <v-text-field v-model="item.kualitas" label="Kualitas">
+                                        <v-text-field v-model="item.kualitas" label="Kualitas X" type="number" :rules="rules"  min=0 max=100>
                                         </v-text-field>
 
                                        
@@ -385,6 +390,13 @@
         },
 
         data: () => ({
+            
+            rules: [
+         v => !!v || 'Required',
+         v => v >= 0 || 'Harus di atas 0',
+         v => v <= 100 || 'Tidak boleh lebih dari 100',
+    ],
+            
             //hover
             hover:'',
             hover2: '',
@@ -436,6 +448,7 @@
             angka_kredit: '',
             keterangan: '',
 
+
             checkbox: false,
             items: [
                 'Utama',
@@ -472,6 +485,10 @@
                 {
                     text: 'Realisasi',
                     value: 'realisasi'
+                },
+                {
+                    text: 'Persentase',
+                    value: 'persentase'
                 },
                 {
                     text: 'Kualitas',
@@ -664,6 +681,15 @@
         },
 
         methods: {
+            persentase(item){
+                
+                var a = item.realisasi/item.target_kuantitas*100 
+                if (a > 100) {
+                    a = 100
+                }
+                return a
+            
+            },
               async downloadExcel(){
                 console.log(this.ckpt_view)
                 await axios.post('/download_excel' , {
@@ -674,6 +700,7 @@
 
                 async ratarata(){
                 var rata=0
+                  var rata_temp=0
                 var id = this.ckpt_view[0].user_id
                 console.log('id', id)
                 console.log('count', this.ckpt_view.length)
@@ -694,7 +721,12 @@
                         }
                         
                     console.log(element)
-                    rata = rata + ((parseInt(element.realisasi) / parseInt(element.target_kuantitas) * 100) + parseInt(element.kualitas) ) / 2
+                     rata_temp = (parseInt(element.realisasi) / parseInt(element.target_kuantitas))
+                    if (rata_temp >= 1) {
+                        rata_temp = 1
+                    }
+                    // rata = rata + ((parseInt(element.realisasi) / parseInt(element.target_kuantitas) * 100) + parseInt(element.kualitas) ) / 2
+                    rata = rata + (( rata_temp * 100) + parseInt(element.kualitas) ) / 2
                     console.log('x',rata);
                 });
                     console.log('rata a',rata);

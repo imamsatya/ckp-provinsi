@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -68,6 +69,25 @@
         </div>
     </div>
 </div>
+
+{{-- <div class="owl">
+  <div class="hand"></div>
+  <div class="hand hand-r"></div>
+  <div class="arms">
+    <div class="arm"></div>
+    <div class="arm arm-r"></div>
+  </div>
+</div>
+<div class="form">
+  <div class="control">
+    <label for="email" class="fa fa-envelope"></label>
+    <input id="email" placeholder="Email" type="email"></input>
+</div>
+<div class="control">
+  <label for="password" class="fa fa-asterisk"></label>
+  <input id="password" placeholder="Password" type="password"></input>
+</div>
+</div> --}}
 @endsection
  {{-- @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">

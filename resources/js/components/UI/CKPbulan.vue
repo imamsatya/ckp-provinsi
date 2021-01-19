@@ -852,6 +852,7 @@
             },
             async ratarata(){
                 var rata=0
+                var rata_temp=0
                 console.log('count', this.ckpt_view.length)
                 if ( this.ckpt_view.length == 0) {
                     this.ratarata_ckp = 0
@@ -870,7 +871,11 @@
                         }
                         
                     console.log(element)
-                    rata = rata + ((parseInt(element.realisasi) / parseInt(element.target_kuantitas) * 100) + parseInt(element.kualitas) ) / 2
+                     rata_temp = (parseInt(element.realisasi) / parseInt(element.target_kuantitas))
+                    if (rata_temp >= 1) {
+                        rata_temp = 1
+                    }
+                    rata = rata + (( rata_temp * 100) + parseInt(element.kualitas) ) / 2
                     console.log('x',rata);
                 });
                     console.log('rata a',rata);

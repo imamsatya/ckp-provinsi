@@ -67,7 +67,11 @@ Route::post('/download_excel/rekap', 'HomeController@excelPost_rekap')->name('do
 Route::get('/download_excel/rekap/{id}', 'HomeController@download_excel_rekap')->name('download_excelRekap');
 
 Route::post('/ganti_password', 'HomeController@gantiPassword')->name('ganti_password');
+Route::post('/upload_ttd', 'HomeController@ttd')->name('upload_ttd');
 
 Route::post('/copy_ckp', 'HomeController@copyCkp')->name('copy_ckp');
+
+
+ Route::get('/download/panduan', 'HomeController@getDownload')->name('get_download');
 
 Route::get('/logout', 'HomeController@logout')->name('logout');

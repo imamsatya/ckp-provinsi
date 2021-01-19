@@ -61,7 +61,7 @@ class HomeController extends Controller
         $ckpt = new Ckp;
         $ckpt = $ckpt->where('user_id', $user->id)->get();
          $daftar_bulan = Ckp::select('bulan')->distinct()->get();
-        return view('home', compact('ckpt', 'daftar_bulan'));
+        return view('home', compact('ckpt', 'daftar_bulan', 'user'));
     }
 
     public function settings(){
@@ -102,8 +102,8 @@ class HomeController extends Controller
         $ckpt->kode_butir_kegiatan = $request->input('edited_ckp')[0]['kode_butir_kegiatan'];
         $ckpt->angka_kredit = $request->input('edited_ckp')[0]['angka_kredit'];
         $ckpt->keterangan = $request->input('edited_ckp')[0]['keterangan'];
-         $ckpt->save();
-        
+        $ckpt->save();
+
     }
 
     public function get_ckp( $bulan){
@@ -273,7 +273,8 @@ class HomeController extends Controller
             break;
 
             case 'Staf Subbagian Kepegawaian dan Hukum':
-            $penilai = $penilai->where('jabatan_id', 10)->get();
+            // $penilai = $penilai->where('jabatan_id', 10)->get();    
+            $penilai = $penilai->where('jabatan_id', 3)->get();    
             break;
 
             case 'Staf Subbagian Bina Keuangan':
@@ -367,11 +368,12 @@ class HomeController extends Controller
         //  dd(count($request->ckp));
 
         //Identitas
+        // dd($penilai);
         $worksheet->getCell('C4')->setValue(': BPS Provinsi Sulawesi Tengah');
         $worksheet->getCell('C5')->setValue(': '.$user->name);
         $worksheet->getCell('C6')->setValue(': '.$user->jabatan->jabatan_kantor);
         $worksheet->getCell('C7')->setValue(': '.$request->ckp[0]['bulan']);
-
+        
         //Penilai
         $spreadsheet->getSheet(0)->mergeCells('B21:C21');
         $worksheet->getCell('B21')->setValue('Tanggal: '.$request->ckp[0]['bulan']);
@@ -388,6 +390,36 @@ class HomeController extends Controller
 
         $spreadsheet->getSheet(0)->mergeCells('E28:H28');
         $worksheet->getCell('E28')->setValue('NIP : '.$penilai[0]['nip_panjang']);
+
+        
+        //gambar
+        
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing->setName('PhpSpreadsheet logo');
+        $drawing->setPath('./ttd/'.$user->email.'.png');
+        
+        $drawing->setHeight(100);
+        $drawing->setWidth(100);
+        
+        $drawing->setCoordinates("C24");
+        $drawing->setOffsetX(70);
+        // $drawing->setOffsetY(5);
+        $drawing->setWorksheet($worksheet);
+
+        $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing2->setName('PhpSpreadsheet logo');
+        $drawing2->setPath('./ttd/'.$penilai[0]['email'].'.png');
+        
+        $drawing2->setHeight(100);
+        $drawing2->setWidth(100);
+        
+        $drawing2->setCoordinates("F24");
+        $drawing2->setOffsetX(70);
+        // $drawing->setOffsetY(5);
+        $drawing2->setWorksheet($worksheet);
+      
+
+        
 
         
 
@@ -407,7 +439,7 @@ class HomeController extends Controller
                                 ->where('bulan', $request->ckp[0]['bulan'])
                                 ->get();
         
-       
+          
        
         // $spreadsheet->getActiveSheet()->insertNewRowBefore(17,1);
         if (count($ckp_tambahan) != 0) {
@@ -429,7 +461,7 @@ class HomeController extends Controller
             }
         }
        
-
+        
         
         // $spreadsheet->getActiveSheet()->insertNewRowBefore(14,1);
         if (count($ckp_utama) != 0) {
@@ -450,7 +482,7 @@ class HomeController extends Controller
 
              }
         }
-       
+        
 
         
         //  $spreadsheet->getSheetByName('CKP-R');
@@ -477,6 +509,7 @@ class HomeController extends Controller
         // dd(substr($bulan, 0, -5));//bulan
         // dd((int)$tahun+1);
         // dd(substr($bulan, -4));//tahun
+        
         switch (substr($bulan, 0, -5)) {
             case 'Januari':
                 $bulan_r = 'Februari '.$tahun;
@@ -489,6 +522,9 @@ class HomeController extends Controller
                 break;
             case 'April':
                 $bulan_r = 'Mei '.$tahun;
+                break;
+            case 'Mei':
+                $bulan_r = 'Juni '.$tahun;
                 break;
             case 'Juni':
                 $bulan_r = 'Juli '.$tahun;
@@ -512,9 +548,10 @@ class HomeController extends Controller
                 # code...
                 break;
         }
-        // dd($bulan_r);
+          
+        
         $worksheet->getCell('B23')->setValue('Tanggal: '.$bulan_r);
-
+        
         // $spreadsheet->getSheet(1)->mergeCells('B27:C27');
         $worksheet->getCell('B29')->setValue($user->name);
 
@@ -528,7 +565,31 @@ class HomeController extends Controller
         // $spreadsheet->getSheet(1)->mergeCells('E28:H28');
         $worksheet->getCell('G30')->setValue('NIP : '.$penilai[0]['nip_panjang']);
 
+        $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing3->setName('PhpSpreadsheet logo');
+        $drawing3->setPath('./ttd/'.$user->email.'.png');
         
+        $drawing3->setHeight(100);
+        $drawing3->setWidth(100);
+        
+        $drawing3->setCoordinates("C26");
+        $drawing3->setOffsetX(60);
+        // $drawing->setOffsetY(5);
+        $drawing3->setWorksheet($worksheet);
+
+        $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing4->setName('PhpSpreadsheet logo');
+        $drawing4->setPath('./ttd/'.$penilai[0]['email'].'.png');
+        
+        $drawing4->setHeight(100);
+        $drawing4->setWidth(100);
+        
+        $drawing4->setCoordinates("I26");
+        $drawing4->setOffsetX(30);
+        // $drawing->setOffsetY(5);
+        $drawing4->setWorksheet($worksheet);
+
+       
 
         //CKP Utama
         // The following code inserts 2 new rows, right before row 7:
@@ -546,7 +607,7 @@ class HomeController extends Controller
                                 ->where('bulan', $request->ckp[0]['bulan'])
                                 ->get();
         
-       
+      
        
         // $spreadsheet->getActiveSheet()->insertNewRowBefore(17,1);
         if (count($ckp_tambahan) != 0) {
@@ -564,8 +625,12 @@ class HomeController extends Controller
                 $worksheet->getCell('E'.$i)->setValue($ckp_tambahan[$i-16]['target_kuantitas']);//target
                 $worksheet->getCell('F'.$i)->setValue($ckp_tambahan[$i-16]['realisasi']);//realisasi
                 
+                $nilai_realisasi= (int)$ckp_tambahan[$i-16]['realisasi']/(int)$ckp_tambahan[$i-16]['target_kuantitas']*100;
+                if ($nilai_realisasi > 100){
+                    $nilai_realisasi = 100;
+                }
                 if ((int)$ckp_tambahan[$i-16]['realisasi'] > 0 && (int)$ckp_tambahan[$i-16]['target_kuantitas'] > 0){
-                       $worksheet->getCell('G'.$i)->setValue((int)$ckp_tambahan[$i-16]['realisasi']/(int)$ckp_tambahan[$i-16]['target_kuantitas']*100);//%
+                       $worksheet->getCell('G'.$i)->setValue($nilai_realisasi);//%
                 }
 
              
@@ -578,7 +643,7 @@ class HomeController extends Controller
             }
         }
        
-
+ 
         
         // $spreadsheet->getActiveSheet()->insertNewRowBefore(14,1);
         if (count($ckp_utama) != 0) {
@@ -593,8 +658,14 @@ class HomeController extends Controller
                 $worksheet->getCell('D'.$i)->setValue($ckp_utama[$i-13]['satuan']);//satuan
                 $worksheet->getCell('E'.$i)->setValue($ckp_utama[$i-13]['target_kuantitas']);//target
                 $worksheet->getCell('F'.$i)->setValue($ckp_utama[$i-13]['realisasi']);//realisasi
+
+                $nilai_realisasi= (int)$ckp_utama[$i-13]['realisasi']/(int)$ckp_utama[$i-13]['target_kuantitas']*100;
+                if ($nilai_realisasi > 100){
+                    $nilai_realisasi = 100;
+                }
+
                  if ((int)$ckp_utama[$i-13]['realisasi'] > 0 && (int)$ckp_utama[$i-13]['target_kuantitas'] > 0){
-                $worksheet->getCell('G'.$i)->setValue((int)$ckp_utama[$i-13]['realisasi']/(int)$ckp_utama[$i-13]['target_kuantitas']*100);//%
+                $worksheet->getCell('G'.$i)->setValue($nilai_realisasi);//%
                 }
              
                 $worksheet->getCell('H'.$i)->setValue($ckp_utama[$i-13]['kualitas']);//kualitas
@@ -605,9 +676,11 @@ class HomeController extends Controller
 
              }
         }
-
+        
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('./upload/write.xlsx');
+        
+        
 
         
 
@@ -620,7 +693,7 @@ class HomeController extends Controller
            
            $user=Auth::user();
            $ckpt = new Ckp;
-        $ckpt = $ckpt->where('id', $id)->get();
+            $ckpt = $ckpt->where('id', $id)->get();
        
              $file="./upload/write.xlsx";
         return Response::download($file, 'CKP '.$user->name. ' '. $ckpt[0]['bulan'].'.xlsx') ;
@@ -653,8 +726,8 @@ class HomeController extends Controller
         // dd($request);
         // dd($request->input('ckpt')['id']);
        
-        $ckpt = new Ckp;
-        $ckpt = $ckpt->where('id', $request)->delete();
+            $ckpt = new Ckp;
+            $ckpt = $ckpt->where('id', $request)->delete();
     }
 
     //ckp bulanan
@@ -809,5 +882,21 @@ class HomeController extends Controller
 
 
        
+    }
+
+    public function getDownload(){
+         $file="./download/Panduan.pdf";
+        return Response::download($file);
+    }
+
+    public function ttd(Request $request){
+
+        $user=Auth::user();
+
+        // dd($user->email);
+         $fileName = $user->email.'.'.$request->file->getClientOriginalExtension();
+   
+        $request->file->move('./ttd', $fileName);
+        dd($request);
     }
 }

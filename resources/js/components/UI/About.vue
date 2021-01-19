@@ -1,4 +1,5 @@
 <template>
+<div>
   <v-card
     class="mx-auto"
     color="#26c6da"
@@ -18,6 +19,8 @@
     <v-card-text class="headline ">
       Halo - halo semuanya semoga selalu sehat seperti para atlet yang siap untuk berlaga dan tidak terjangkit virus corona. Semoga aplikasinya bermanfaat :D 
     </v-card-text>
+
+    
 
     <!-- <v-card-actions>
       <v-list-item class="grow">
@@ -45,4 +48,18 @@
       </v-list-item>
     </v-card-actions> -->
   </v-card>
+
+  <v-card
+    class="mx-auto"
+    color="white"
+    
+    max-width="400"
+  >
+
+  <v-btn small class="ma-2" tile outlined color="info" href="/download/panduan">
+                                <v-icon left>mdi-book</v-icon> Panduan
+    </v-btn>
+  </v-card>
+</div>
 </template>
+
