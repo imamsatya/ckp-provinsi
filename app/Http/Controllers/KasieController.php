@@ -42,32 +42,32 @@ class KasieController extends Controller
             //kabid TU
             case 'Kepala Bagian Tata Usaha':
                 //$daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,9,10,11,12,13])->get();
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,9,10,11,12,13, 30])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,9,10,11,12,13, 30,52,29,30,31,32,33])->get();
             break;
                         
             //kabid Sosial
             case 'Kepala Bidang Statistik Sosial':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,14,15,16,49])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,14,15,16,49,34,35,36])->get();
             break;
 
             //kabid Produksi
             case 'Kepala Bidang Statistik Produksi':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,17,18,19])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,17,18,19,51,37,38,39])->get();
             break;
 
             //kabid Distribusi
             case 'Kepala Bidang Statistik Distribusi':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,20,21,22,50])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,20,21,22,50, 42,40,41])->get();
             break;
 
             //kabid Neraca
             case 'Kepala Bidang Neraca Wilayah dan Analisis Statistik':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,23,24,25])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,23,24,25,43,44,45])->get();
             break;
 
             //kabid IPDS
             case 'Kepala Bidang Statistik Integrasi Pengolahan dan Diseminasi Statistik':
-            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,26,27,28])->get();
+            $daftar_pegawai = $daftar_pegawai->whereIn('jabatan_id', [2,26,27,28,46,47,48])->get();
             break;
 
             //=============================================//

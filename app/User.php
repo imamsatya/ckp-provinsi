@@ -41,10 +41,4 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Jabatan', 'id', 'jabatan_id');
     }
-
-    public function ratarata()
-    {
-        return $this->hasMany(Ratarata::class);
-    }
-    
 }

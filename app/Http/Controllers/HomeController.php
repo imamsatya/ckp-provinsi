@@ -102,8 +102,8 @@ class HomeController extends Controller
         $ckpt->kode_butir_kegiatan = $request->input('edited_ckp')[0]['kode_butir_kegiatan'];
         $ckpt->angka_kredit = $request->input('edited_ckp')[0]['angka_kredit'];
         $ckpt->keterangan = $request->input('edited_ckp')[0]['keterangan'];
-        $ckpt->save();
-
+         $ckpt->save();
+        
     }
 
     public function get_ckp( $bulan){
@@ -273,8 +273,8 @@ class HomeController extends Controller
             break;
 
             case 'Staf Subbagian Kepegawaian dan Hukum':
-            // $penilai = $penilai->where('jabatan_id', 10)->get();    
-            $penilai = $penilai->where('jabatan_id', 3)->get();    
+            $penilai = $penilai->where('jabatan_id', 10)->get();    
+            // $penilai = $penilai->where('jabatan_id', 3)->get();    
             break;
 
             case 'Staf Subbagian Bina Keuangan':
@@ -349,7 +349,7 @@ class HomeController extends Controller
             $penilai = $penilai->where('jabatan_id', 27)->get();
             break;
 
-            case 'Staf Seksi  Diseminasi dan Layanan Statistik':
+            case 'Staf Seksi Diseminasi dan Layanan Statistik':
             $penilai = $penilai->where('jabatan_id', 28)->get();
             break;
 
@@ -529,6 +529,9 @@ class HomeController extends Controller
             case 'Juni':
                 $bulan_r = 'Juli '.$tahun;
                 break;
+            case 'Juli':
+                    $bulan_r = 'Agustus '.$tahun;
+                    break;
             case 'Agustus':
                 $bulan_r = 'September '.$tahun;
                 break;
@@ -542,7 +545,8 @@ class HomeController extends Controller
                 $bulan_r = 'Desember '.$tahun;
                 break;
             case 'Desember':
-                $bulan_r = 'Januari '.$tahun+1;
+                $tahun = $tahun+1;
+                $bulan_r = 'Januari '.$tahun;
                 break;
             default:
                 # code...
@@ -726,8 +730,8 @@ class HomeController extends Controller
         // dd($request);
         // dd($request->input('ckpt')['id']);
        
-            $ckpt = new Ckp;
-            $ckpt = $ckpt->where('id', $request)->delete();
+        $ckpt = new Ckp;
+        $ckpt = $ckpt->where('id', $request)->delete();
     }
 
     //ckp bulanan
