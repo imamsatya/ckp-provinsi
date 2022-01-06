@@ -1,24 +1,24 @@
 <template>
 <v-row dense>
     <v-col cols="12" md="6">
-        <v-card class="mx-auto" max-width="400">
+        <v-card style="background-color: #283046; color: white;" class="mx-auto" max-width="400">
             <v-card-title>
-                <v-icon large left>
+                <v-icon style="color: #7367f0" large left>
                     mdi-key
                 </v-icon>
-                <span class="title ">Ganti Password</span>
+                <span class="title " >Ganti Password</span>
             </v-card-title>
 
             <v-card-text class=" ">
-                <v-text-field v-model="password_lama" :error-messages="password_lamaErrors" required
+                <v-text-field dark v-model="password_lama" :error-messages="password_lamaErrors" required
                     @input="$v.password_lama.$touch()" @blur="$v.password_lama.$touch()" type="password"
                     label="Password Lama"></v-text-field>
 
-                <v-text-field v-model="password_baru" :error-messages="password_baruErrors" required
+                <v-text-field dark v-model="password_baru" :error-messages="password_baruErrors" required
                     @input="$v.password_baru.$touch()" @blur="$v.password_baru.$touch()" type="password"
                     label="Password Baru"></v-text-field>
 
-                <v-text-field v-model="ulangi_password_baru" :error-messages="ulangi_password_baruErrors" required
+                <v-text-field dark v-model="ulangi_password_baru" :error-messages="ulangi_password_baruErrors" required
                     @input="$v.ulangi_password_baru.$touch()" @blur="$v.ulangi_password_baru.$touch()" type="password"
                     label="Ulangi Password Baru"></v-text-field>
             </v-card-text>
@@ -26,11 +26,11 @@
             <v-row justify="center">
                 <br><br><br><br>
 
-                <v-btn class="mr-4" color="red darken-1" tile outlined @click="clear">
+                <v-btn class="mr-4" style="background-color: #ea5455;color:white;" tile  @click="clear">
                     <v-icon left>mdi-eraser</v-icon>
                     clear
                 </v-btn>
-                <v-btn class="mr-4" color="primary" tile outlined @click="submit">
+                <v-btn class="mr-4" style="background-color: #7367f0; color:white;"  tile  @click="submit">
                     <v-icon left>mdi-send</v-icon>submit
                 </v-btn>
             </v-row>
@@ -54,15 +54,15 @@
     </v-col>
 
     <v-col cols="12" md="6">
-        <v-card class="mx-auto" max-width="400">
+        <v-card class="mx-auto" style="background-color: #283046;color: white;" max-width="400">
             <v-card-title>
-                <v-icon large left>
+                <v-icon style="color: #7367f0;" large left>
                     mdi-feather
                 </v-icon>
                 <span class="title ">Upload Tanda Tangan</span>
             </v-card-title>
 
-             <v-card-text>
+             <v-card-text dark>
                                 <!-- <v-form >
                                     <input  label="Regular" type="file" v-on:change="onFileChange">
                                     <v-text-field label="Regular" type="file" v-on:change="onImageChange"></v-text-field>
@@ -75,16 +75,16 @@
 
                         <input type="text" class="form-control" v-model="name"> -->
 
-                                    <strong>File:</strong>
+                                    <strong style="color: white;">File:</strong>
 
-                                    <input type="file" class="form-control" @change="onFileChange">
+                                    <input style="background-color: #161d31; color: white;" type="file" class="form-control" @change="onFileChange">
 
 
 
                                     <!-- <button class="btn btn-success">Submit</button> -->
                                      <v-card-actions>
                                 <v-spacer />
-                                <v-btn color="primary" @click="formSubmit">Proses</v-btn>
+                                <v-btn style="background-color: #7367f0;color: white;"   @click="formSubmit">Proses</v-btn>
                             </v-card-actions>
                                 </form>
                             </v-card-text>

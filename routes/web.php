@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,18 @@ Auth::routes();
 //admin
 Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('is_admin');
 
+Route::get('/admin', 'AdminController@index')->name('admin.home');
+Route::post('/save_user', 'AdminController@storeUser')->name('admin.storeUser');
+Route::post('/save_edited_user/{id}', 'AdminController@updateUser')->name('admin.updatedUser');
+
+Route::post('/save_jabatan', 'AdminController@storeJabatan')->name('admin.storeUser');
+Route::post('/save_edited_jabatan/{id}', 'AdminController@updateJabatan')->name('admin.updatedJabatan');
+
+Route::delete('/delete_user/{id}', 'AdminController@destroyUser')->name('admin.deleteUser');
+Route::delete('/delete_jabatan/{id}', 'AdminController@destroyJabatan')->name('admin.deleteJabatan');
+Route::get('/getCurrentUser', 'AdminController@getCurrentUser')->name('admin.getCurrentUser');
+
+Route::get('/ckprecords', 'AdminController@indexRecords')->name('admin.ckp_record');
 //kasie
 Route::get('/kasie/home', 'KasieController@index')->name('kasie.home');
 

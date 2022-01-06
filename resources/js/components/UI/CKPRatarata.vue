@@ -3,21 +3,21 @@
        
         <v-container fluid>
 
-            <v-card class="pa-md-4 mx-lg-auto raised" elevation=8>
+            <v-card style="background-color: #283046;" class="pa-md-4 mx-lg-auto raised" elevation=8>
                 <v-row dense>
 
 
                     <v-col cols="12">
-                        <v-card-title>
+                        <v-card-title style="color: white;" >
                             Daftar Bulan
                             <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                            <v-text-field dark v-model="search" append-icon="mdi-magnify" label="Search" single-line
                                 hide-details></v-text-field>
 
                         </v-card-title>
                         <!-- {{ this.ckpt_view }} -->
                         <!-- loading loading-text="Loading... Please wait" -->
-                        <v-data-table :headers="headers" :items="daftar_bulan_view" class="elevation-1"
+                        <v-data-table dark style="background-color: #161d31; color: white;" :headers="headers" :items="daftar_bulan_view" class="elevation-1"
                             :search="search">
 
                             <template v-slot:item.jenis_kegiatan="{ item }">
@@ -36,7 +36,7 @@
                                 </v-btn> -->
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on }">
-                                        <v-icon color="primary" @click="showCkpRatarata(item)" v-on="on">mdi-eye
+                                        <v-icon color="#7367f0" @click="showCkpRatarata(item)" v-on="on">mdi-eye
                                         </v-icon>
                                     </template>
                                     <span>Lihat CKP Bulan ini</span>
@@ -61,28 +61,28 @@
         <!-- rincian ckp -->
         <v-container fluid v-if="show">
 <!-- {{this.ckpt_view[0][1]}} -->
-            <v-card class="pa-md-4 mx-lg-auto raised" elevation=8>
+            <v-card class="pa-md-4 mx-lg-auto raised" style="background-color: #283046" elevation=8>
                 <v-row dense>
 
 
                     <v-col cols="12">
-                        <v-card-title>
+                        <v-card-title style="color: white;">
                              Rekap Nilai CKP {{this.bulan}}
                         </v-card-title>
                         <v-card-title>
                            
-                            <v-btn small class="ma-2" tile outlined color="success" @click="downloadExcel()">
+                            <v-btn small class="ma-2" tile outlined color="#28c76f" @click="downloadExcel()">
                                 <v-icon left>mdi-file-excel</v-icon> Download Excel
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                            <v-text-field dark v-model="search" append-icon="mdi-magnify" label="Search" single-line
                                 hide-details></v-text-field>
 
                         </v-card-title>
                         
                         <!-- {{ this.ckpt_view }} -->
                         <!-- loading loading-text="Loading... Please wait" -->
-                        <v-data-table :headers="headers2" :items="ckpt_view[0]" class="elevation-1" :search="search">
+                        <v-data-table dark style="background-color: #161d31; color: white;" :headers="headers2" :items="ckpt_view[0]" class="elevation-1" :search="search">
                             <!-- <template v-slot:item.aksi="{ item }">
 
                                 <v-btn color="primary" fab x-small dark @click="editDialog(item)">

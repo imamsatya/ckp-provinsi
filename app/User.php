@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use HasApiTokens;
     /**
      * The attributes that are mass assignable.
      *
@@ -41,10 +41,4 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Jabatan', 'id', 'jabatan_id');
     }
-
-    public function ratarata()
-    {
-        return $this->hasMany(Ratarata::class);
-    }
-    
 }

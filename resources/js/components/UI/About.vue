@@ -2,7 +2,7 @@
 <div>
   <v-card
     class="mx-auto"
-    color="#26c6da"
+    color="#7367f0"
     dark
     max-width="400"
   >
@@ -51,12 +51,12 @@
 
   <v-card
     class="mx-auto"
-    color="white"
+    color="#283046"
     
     max-width="400"
   >
 
-  <v-btn small class="ma-2" tile outlined color="info" href="/download/panduan">
+  <v-btn small class="ma-2" tile outlined color="#7367f0" href="/download/panduan">
                                 <v-icon left>mdi-book</v-icon> Panduan
     </v-btn>
   </v-card>

@@ -1,8 +1,45 @@
 <template>
     <v-app id="inspire">
-        <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
-            <v-list dense v-if="role != 6 && role != 2 && this.user.email != 'nyoman@bps.go.id' && this.user.email != 'rikarie@bps.go.id'">
+        <v-navigation-drawer style="background-color: #283046;" v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp"
+            app>
+            <!-- kasie  -->
+            <v-list dense
+                v-if="role != 6 && role != 2 && this.user.email != 'nyoman@bps.go.id' && this.user.email != 'rikarie@bps.go.id'">
+                <v-list-group no-action v-if="this.user.is_admin == 1">
+                    <template v-slot:activator>
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+                    <v-list-item  link @click="goToAdmin('/admin')">
 
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                     <v-list-item  link @click="goToAdmin('/ckprecords')">
+
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                CKP Records
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-group>
                 <template v-for="item in items">
                     <v-row v-if="item.heading" :key="item.heading" align="center">
                         <v-col cols="6">
@@ -15,20 +52,20 @@
                         </v-col>
                     </v-row>
                     <v-list-group v-if="item.children" :key="item.text" v-model="item.model"
-                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" color="primary">
+                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="">
                         <template v-slot:activator>
                             <v-list-item-content>
-                                <v-list-item-title>
+                                <v-list-item-title style="color: white">
                                     {{ item.text }}
                                 </v-list-item-title>
                             </v-list-item-content>
                         </template>
                         <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
                             <v-list-item-action v-if="child.icon">
-                                <v-icon color="amber darken-3">{{ child.icon }}</v-icon>
+                                <v-icon color="#7367f0">{{ child.icon }}</v-icon>
                             </v-list-item-action>
                             <v-list-item-content>
-                                <v-list-item-title>
+                                <v-list-item-title style="color: white; ">
                                     {{ child.text }}
                                 </v-list-item-title>
                             </v-list-item-content>
@@ -37,10 +74,10 @@
 
                     <v-list-item v-else :key="item.text" link @click="goTo(item)">
                         <v-list-item-action>
-                            <v-icon color="amber darken-3">{{ item.icon }}</v-icon>
+                            <v-icon color="#7367f0">{{ item.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title>
+                            <v-list-item-title style="color: white; ">
                                 {{ item.text }}
                             </v-list-item-title>
                         </v-list-item-content>
@@ -48,8 +85,44 @@
                 </template>
             </v-list>
 
-            <v-list dense v-if="role == 6 && this.user.email != 'aw.murdan@bps.go.id'">
 
+            <!-- user biasa -->
+            <v-list dense v-if="role == 6 && this.user.email != 'muznah@bps.go.id'">
+                <v-list-group no-action v-if="this.user.is_admin == 1">
+                    <template v-slot:activator>
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+                    <v-list-item  link @click="goToAdmin('/admin')">
+
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                     <v-list-item  link @click="goToAdmin('/ckprecords')">
+
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                CKP Records
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-group>
                 <template v-for="item in items2">
                     <v-row v-if="item.heading" :key="item.heading" align="center">
                         <v-col cols="6">
@@ -62,12 +135,11 @@
                         </v-col>
                     </v-row>
                     <v-list-group v-if="item.children" :key="item.text" v-model="item.model"
-                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" color="primary"
-                        value="true">
+                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" value="true">
                         <template v-slot:activator>
 
                             <v-list-item-content>
-                                <v-list-item-title>
+                                <v-list-item-title style="color: white; ">
                                     {{ item.text }}
                                 </v-list-item-title>
                             </v-list-item-content>
@@ -77,10 +149,10 @@
                         <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
 
                             <v-list-item-action v-if="child.icon">
-                                <v-icon>{{ child.icon }}</v-icon>
+                                <v-icon style="color: #7367f0;">{{ child.icon }}</v-icon>
                             </v-list-item-action>
                             <v-list-item-content>
-                                <v-list-item-title>
+                                <v-list-item-title style="color: white; ">
                                     {{ child.text }}
                                 </v-list-item-title>
                             </v-list-item-content>
@@ -90,10 +162,102 @@
 
                     <v-list-item v-else :key="item.text" link @click="goTo(item)">
                         <v-list-item-action>
-                            <v-icon>{{ item.icon }}</v-icon>
+                            <v-icon style="color: #7367f0">{{ item.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title>
+                            <v-list-item-title style="color: white; ">
+                                {{ item.text }}
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+
+                </template>
+
+            </v-list>
+
+
+            <!-- kepala bps, pak nyoman -->
+            <v-list dense v-if="role == 2 || this.user.email == 'nyoman@bps.go.id'">
+                <v-list-group no-action v-if="this.user.is_admin == 1">
+                    <template v-slot:activator>
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+                    <v-list-item  link @click="goToAdmin('/admin')">
+
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                     <v-list-item  link @click="goToAdmin('/ckprecords')">
+
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                CKP Records
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-group>
+                <template v-for="item in items3">
+                    <v-row v-if="item.heading" :key="item.heading" align="center">
+                        <v-col cols="6">
+                            <v-subheader v-if="item.heading">
+                                {{ item.heading }} asdads
+                            </v-subheader>
+                        </v-col>
+                        <v-col cols="6" class="text-center">
+                            <a href="#!" class="body-2 black--text">EDIT</a>
+                        </v-col>
+                    </v-row>
+                    <v-list-group v-if="item.children" :key="item.text" v-model="item.model"
+                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" color="#7367f0"
+                        value="true">
+                        <template v-slot:activator>
+
+                            <v-list-item-content>
+                                <v-list-item-title style="color: white; ">
+                                    {{ item.text }}
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+                        <!-- <v-list-group no-action  value="true"> -->
+
+                        <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
+
+                            <v-list-item-action v-if="child.icon">
+                                <v-icon style="color: #7367f0">{{ child.icon }}</v-icon>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title style="color: white; ">
+                                    {{ child.text }}
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <!-- </v-list-group> -->
+                    </v-list-group>
+
+                    <v-list-item v-else :key="item.text" link @click="goTo(item)">
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">{{ item.icon }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
                                 {{ item.text }}
                             </v-list-item-title>
                         </v-list-item-content>
@@ -101,10 +265,43 @@
                 </template>
             </v-list>
 
-            
+            <!-- rekap -->
+            <v-list dense v-if="this.user.email == 'rikarie@bps.go.id' || this.user.email == 'muznah@bps.go.id'">
+                <v-list-group no-action v-if="this.user.is_admin == 1">
+                    <template v-slot:activator>
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+                    <v-list-item  link @click="goToAdmin('/admin')">
 
-             <v-list dense v-if="role == 2 || this.user.email == 'nyoman@bps.go.id'">
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                Admin
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
 
+                     <v-list-item  link @click="goToAdmin('/ckprecords')">
+
+                        <v-list-item-action>
+                            <v-icon style="color: #7367f0">mdi-robot-happy</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title style="color: white; ">
+                                CKP Records
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-group>
                 <template v-for="item in items3">
                     <v-row v-if="item.heading" :key="item.heading" align="center">
                         <v-col cols="6">
@@ -122,8 +319,8 @@
                         <template v-slot:activator>
 
                             <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ item.text }} 
+                                <v-list-item-title style="color: white;">
+                                    {{ item.text }}
                                 </v-list-item-title>
                             </v-list-item-content>
                         </template>
@@ -132,10 +329,10 @@
                         <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
 
                             <v-list-item-action v-if="child.icon">
-                                <v-icon>{{ child.icon }}</v-icon>
+                                <v-icon style="color: #7367f0">{{ child.icon }}</v-icon>
                             </v-list-item-action>
                             <v-list-item-content>
-                                <v-list-item-title>
+                                <v-list-item-title style="color: white;">
                                     {{ child.text }}
                                 </v-list-item-title>
                             </v-list-item-content>
@@ -145,116 +342,10 @@
 
                     <v-list-item v-else :key="item.text" link @click="goTo(item)">
                         <v-list-item-action>
-                            <v-icon>{{ item.icon }}</v-icon>
+                            <v-icon style="color: #7367f0">{{ item.icon }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title>
-                                {{ item.text }}
-                            </v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </template>
-            </v-list>
-
-            <v-list dense v-if="role == 5 || this.user.email == 'rikarie@bps.go.id' || this.user.email == 'muznah@bps.go.id'">
-
-                <template v-for="item in items3">
-                    <v-row v-if="item.heading" :key="item.heading" align="center">
-                        <v-col cols="6">
-                            <v-subheader v-if="item.heading">
-                                {{ item.heading }} asdads
-                            </v-subheader>
-                        </v-col>
-                        <v-col cols="6" class="text-center">
-                            <a href="#!" class="body-2 black--text">EDIT</a>
-                        </v-col>
-                    </v-row>
-                    <v-list-group v-if="item.children" :key="item.text" v-model="item.model"
-                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" color="primary"
-                        value="true">
-                        <template v-slot:activator>
-
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ item.text }} 
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <!-- <v-list-group no-action  value="true"> -->
-
-                        <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
-
-                            <v-list-item-action v-if="child.icon">
-                                <v-icon>{{ child.icon }}</v-icon>
-                            </v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ child.text }}
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                        <!-- </v-list-group> -->
-                    </v-list-group>
-
-                    <v-list-item v-else :key="item.text" link @click="goTo(item)">
-                        <v-list-item-action>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>
-                                {{ item.text }}
-                            </v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </template>
-            </v-list>
-
-            <v-list dense v-if="this.user.email == 'aw.murdan@bps.go.id'">
-
-                <template v-for="item in items4">
-                    <v-row v-if="item.heading" :key="item.heading" align="center">
-                        <v-col cols="6">
-                            <v-subheader v-if="item.heading">
-                                {{ item.heading }} asdads
-                            </v-subheader>
-                        </v-col>
-                        <v-col cols="6" class="text-center">
-                            <a href="#!" class="body-2 black--text">EDIT</a>
-                        </v-col>
-                    </v-row>
-                    <v-list-group v-if="item.children" :key="item.text" v-model="item.model"
-                        :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="" color="primary"
-                        value="true">
-                        <template v-slot:activator>
-
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ item.text }} 
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <!-- <v-list-group no-action  value="true"> -->
-
-                        <v-list-item v-for="(child, i) in item.children" :key="i" link @click="goTo(child)">
-
-                            <v-list-item-action v-if="child.icon">
-                                <v-icon>{{ child.icon }}</v-icon>
-                            </v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ child.text }}
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                        <!-- </v-list-group> -->
-                    </v-list-group>
-
-                    <v-list-item v-else :key="item.text" link @click="goTo(item)">
-                        <v-list-item-action>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>
+                            <v-list-item-title style="color: white;">
                                 {{ item.text }}
                             </v-list-item-title>
                         </v-list-item-content>
@@ -264,7 +355,7 @@
 
         </v-navigation-drawer>
 
-        <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="primary" dark>
+        <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app dark style="background-color: #7367f0;">
             <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
             <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
                 <span class="hidden-sm-and-down">CKP</span>
@@ -281,7 +372,8 @@
             <v-menu transition="slide-y-reverse-transition">
                 <template v-slot:activator="{ on }">
 
-                    <v-btn rounded color="white primary--text" class="ma-2 text-capitalize" v-on="on">
+                    <v-btn style="background-color: white;color: #7367f0;" rounded class="ma-2 text-capitalize"
+                        v-on="on">
                         <v-icon left>mdi-chevron-down</v-icon>{{user.name}}
                     </v-btn>
                 </template>
@@ -302,7 +394,7 @@
 
             </v-menu>
         </v-app-bar>
-        <v-content class="grey lighten-3">
+        <v-main style="background-color: #161d31" class=" lighten-3">
 
             <v-container>
 
@@ -313,7 +405,7 @@
 
 
 
-        </v-content>
+        </v-main>
         <!-- V1 -->
         <!-- <v-footer class="justify-center pl-0" padless inset app  hide-on-scroll  color="primary" dark>
             <v-card flat tile class="white--text text-center" color="primary" dark>
@@ -378,7 +470,7 @@
                             icon: 'mdi-calendar-range',
                             route: '/ckp_bulan'
                         },
-                       
+
 
                     ],
                 },
@@ -388,7 +480,7 @@
                     route: '/penilaian',
                 },
                 {
-                    icon: 'mdi-settings',
+                    icon: 'mdi-account-cog',
                     text: 'Settings',
                     route: '/settings'
                 },
@@ -397,22 +489,7 @@
                     text: 'About',
                     route: '/about'
                 },
-                // {
-                //     icon: 'mdi-message',
-                //     text: 'Send feedback'
-                // },
-                // {
-                //     icon: 'mdi-help-circle',
-                //     text: 'Help'
-                // },
-                // {
-                //     icon: 'mdi-cellphone-link',
-                //     text: 'App downloads'
-                // },
-                // {
-                //     icon: 'mdi-keyboard',
-                //     text: 'Go to the old version'
-                // },
+
             ],
 
             //staff
@@ -431,13 +508,13 @@
                             icon: 'mdi-calendar-range',
                             route: '/ckp_bulan'
                         }
-                       
+
 
                     ],
                 },
 
                 {
-                    icon: 'mdi-settings',
+                    icon: 'mdi-account-cog',
                     text: 'Settings',
                     route: '/settings'
                 },
@@ -488,14 +565,14 @@
 
                     ],
                 },
-                 {
+                {
                     icon: 'mdi-sticker-check',
                     text: 'Penilaian',
                     route: '/penilaian',
                 },
 
                 {
-                    icon: 'mdi-settings',
+                    icon: 'mdi-account-cog',
                     text: 'Settings',
                     route: '/settings'
                 },
@@ -548,7 +625,7 @@
 
 
                 {
-                    icon: 'mdi-settings',
+                    icon: 'mdi-account-cog',
                     text: 'Settings',
                     route: '/settings'
                 },
@@ -576,6 +653,10 @@
             ],
         }),
         methods: {
+            goToAdmin(item) {
+                console.log(item)
+                window.location.href = item
+            },
             goTo(item) {
                 // console.log(item.route)
                 window.location.href = item.route
