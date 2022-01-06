@@ -1,38 +1,38 @@
 <template>
     <div>
         <v-container>
-            <v-card elevation=8 class=" pa-md-4 mx-lg-auto">
-                <v-select :items="pilihan_bulan" label="Bulan" v-model="bulan" @input="pilihBulan(bulan)"></v-select>
+            <v-card style="background-color: #283046;" elevation=8 class=" pa-md-4 mx-lg-auto">
+                <v-select dark style="color:white;" :items="pilihan_bulan" label="Bulan" v-model="bulan" @input="pilihBulan(bulan)"></v-select>
             </v-card>
         </v-container>
 
         <v-container>
-            <v-card  elevation=8 class="rounded-card pa-md-4 mx-lg-auto">
+            <v-card style="background-color: #283046; "  elevation=8 class="rounded-card pa-md-4 mx-lg-auto">
                 
-                <v-card-title class="primary--text">
-                        <v-icon large color="primary">mdi-clipboard-text</v-icon>Form CKP
+                <v-card-title style="color: white" class="">
+                        <v-icon large style="color: #7367f0">mdi-clipboard-text</v-icon>  Form CKP
                     <v-spacer></v-spacer>
 
                 </v-card-title>
                 <v-row>
                   <!-- {{this.user.jabatan_id}} -->
-                    <v-col cols="12" md="6">
-                        <v-select v-if="this.user.jabatan_id == 2" v-model="jenis_bidang" :items="bidang" :error-messages="jenis_bidangErrors"
+                    <v-col cols="12" md="6" style="color: white;">
+                        <v-select dark v-if="this.user.jabatan_id == 2" v-model="jenis_bidang" :items="bidang" :error-messages="jenis_bidangErrors"
                             label="Kegiatan Bidang *" required @change="$v.jenis_bidang.$touch()"
                             @blur="$v.jenis_bidang.$touch()"></v-select>
 
-                        <v-select v-model="jenis_kegiatan" :items="items" :error-messages="jenis_kegiatanErrors"
+                        <v-select dark v-model="jenis_kegiatan" :items="items" :error-messages="jenis_kegiatanErrors"
                             label="Jenis Kegiatan *" required @change="$v.jenis_kegiatan.$touch()"
                             @blur="$v.jenis_kegiatan.$touch()"></v-select>
 
-                        <v-text-field v-model="uraian_kegiatan" :error-messages="uraian_kegiatanErrors"
+                        <v-text-field dark v-model="uraian_kegiatan" :error-messages="uraian_kegiatanErrors"
                             label="Uraian Kegiatan *" required @input="$v.uraian_kegiatan.$touch()"
                             @blur="$v.uraian_kegiatan.$touch()"  autocomplete="on">></v-text-field>
 
-                        <v-text-field v-model="satuan" :error-messages="satuanErrors" label="Satuan *" cache-items autocomplete="on" required
+                        <v-text-field dark v-model="satuan" :error-messages="satuanErrors" label="Satuan *" cache-items autocomplete="on" required
                             @input="$v.satuan.$touch()" @blur="$v.satuan.$touch()"></v-text-field>
 
-                        <v-text-field v-model="target_kuantitas" :error-messages="target_kuantitasErrors"
+                        <v-text-field dark v-model="target_kuantitas" :error-messages="target_kuantitasErrors"
                             label="Target Kuantitas *" required @input="$v.target_kuantitas.$touch()"
                             @blur="$v.target_kuantitas.$touch()"></v-text-field>
 
@@ -40,11 +40,11 @@
                     </v-col>
 
                     <v-col cols="12" md="6">
-                        <v-text-field v-model="kode_butir_kegiatan" label="Kode Butir Kegiatan"></v-text-field>
+                        <v-text-field dark v-model="kode_butir_kegiatan" label="Kode Butir Kegiatan"></v-text-field>
 
-                        <v-text-field v-model="angka_kredit" label="Angka Kredit"></v-text-field>
+                        <v-text-field dark v-model="angka_kredit" label="Angka Kredit"></v-text-field>
 
-                        <v-text-field v-model="keterangan" label="Keterangan"></v-text-field>
+                        <v-text-field dark v-model="keterangan" label="Keterangan"></v-text-field>
 
                         <!-- <br><br><br><br>
                          
@@ -56,14 +56,16 @@
                 <v-row justify="center">
                     <br><br><br><br>
 
-                    <v-btn class="mr-4" color="red darken-1" tile outlined @click="clear"> 
+                    <v-btn class="mr-4"  tile style="background-color: #ea5455;color:white;"  @click="clear"> 
                          <v-icon left>mdi-eraser</v-icon>
                          clear
                     </v-btn>
-                    <v-btn :disabled="disable" class="mr-4" color="primary" tile outlined @click="submit">
+                    <v-btn :disabled="disable" class="mr-4" style="background-color: #7367f0; color:white;" tile  @click="submit">
                          <v-icon left>mdi-send</v-icon>submit</v-btn>
                 </v-row>
+                <br>
             </v-card>
+            
         </v-container>
 
 
@@ -72,13 +74,13 @@
 
         <v-container fluid>
 
-            <v-card class="pa-md-4 mx-lg-auto raised " elevation=8>
+            <v-card style="background-color: #283046; font-color: white;" class="pa-md-4 mx-lg-auto raised " elevation=8>
                 <v-row dense>
 
 
                     <v-col cols="12">
-                        <v-card-title class="primary--text">
-                             <v-icon large color="primary">mdi-calendar</v-icon> Daftar CKP {{this.bulan}}
+                        <v-card-title style="color: white;">
+                             <v-icon style="color: #7367f0;" large >mdi-calendar</v-icon> Daftar CKP {{this.bulan}}
                             <!-- <br>
                             <v-btn class="ma-2" tile outlined color="success">
                             <v-icon left>mdi-pencil</v-icon> Edit
@@ -88,25 +90,25 @@
                                 hide-details></v-text-field> -->
 
                         </v-card-title>
-                         <v-card-title class="primary--text">
-                             <v-icon large color="primary">mdi-numeric-9-plus-box-multiple-outline</v-icon> Nilai CKP : {{ratarata_ckp_view}} 
+                         <v-card-title style="color: white;">
+                             <v-icon large style="color: #7367f0;">mdi-numeric-9-plus-box-multiple-outline</v-icon> Nilai CKP : {{ratarata_ckp_view}} 
                         </v-card-title>
                         <!-- <v-card-subtitle class="primary--text">
                             Nilai CKP : {{ratarata_ckp}} 
                         </v-card-subtitle> -->
                         <v-card-title>
 
-                            <v-btn :disabled="disable" small class="ma-2" tile outlined color="primary" @click="realisasiDialog()">
+                            <v-btn :disabled="disable" small class="ma-2" tile  style="background-color: #7367f0;color: white;" @click="realisasiDialog()">
                                 <v-icon left>mdi-pencil</v-icon> Realisasi
                             </v-btn>
-                            <v-btn small class="ma-2" tile outlined color="success" @click="downloadExcel()">
+                            <v-btn small class="ma-2" tile style="background-color: #28c76f;color: white;"  @click="downloadExcel()">
                                 <v-icon left>mdi-file-excel</v-icon> Download Excel
                             </v-btn>
-                            <v-btn :disabled="disable" small class="ma-2" tile outlined color="primary" @click="copyCkp()">
+                            <v-btn :disabled="disable" small class="ma-2" tile style="background-color: #7367f0;color: white;"  @click="copyCkp()">
                                 <v-icon left>mdi-content-copy</v-icon> Copy ?
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                            <v-text-field dark v-model="search" append-icon="mdi-magnify" label="Search" single-line
                                 hide-details></v-text-field>
 
                         </v-card-title>
@@ -127,14 +129,14 @@
     >
      Yeay, Copy Berhasil :)
     </v-alert>
-                        <v-data-table :headers="headers" :items="ckpt_view" class="elevation-1" :search="search">
-                            <template v-slot:item.aksi="{ item }">
+                        <v-data-table dark style="background-color: #161d31; color: white;" :headers="headers" :items="ckpt_view" class="elevation-1" :search="search">
+                            <template style="color:white;" v-slot:item.aksi="{ item }">
                                 <div v-if="disable==false">
-                                <v-btn  color="primary" fab x-small dark @click="editDialog(item)">
+                                <v-btn  style="background-color: #7367f0;color: white;" fab x-small dark @click="editDialog(item)">
                                     <v-icon small @click="editDialog(item)">mdi-pencil</v-icon>
                                 </v-btn>
 
-                                <v-btn color="error" fab x-small dark @click="deleteDialog(item)">
+                                <v-btn style="background-color: #ea5455;color:white;" fab x-small dark @click="deleteDialog(item)">
                                     <v-icon small @click="deleteDialog(item)">mdi-delete</v-icon>
                                 </v-btn>
                                 </div>
@@ -213,21 +215,21 @@
 
         <!-- delete dialog -->
         <v-dialog v-model="delete_dialog" max-width="290">
-            <v-card>
+            <v-card style="background-color: #161d31; color: white;">
                 <v-card-title class="headline">Yakin ?</v-card-title>
 
-                <v-card-text>
+                <v-card-text class="white--text">
                     Kamu akan menghapusnya untuk selama - lamanya
                 </v-card-text>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn color="red darken-1" text @click="delete_dialog = false">
+                    <v-btn style="background-color: #ea5455;color:white;" text @click="delete_dialog = false">
                         Ngga jadi deh
                     </v-btn>
 
-                    <v-btn color="green darken-1" text @click="delete_ckp()">
+                    <v-btn style="background-color: #28c76f;color: white;" text @click="delete_ckp()">
                         Iya beneran
                     </v-btn>
                 </v-card-actions>
@@ -237,7 +239,7 @@
         <!-- edit dialog -->
         <v-dialog v-model="edit_dialog" persistent max-width="600px">
 
-            <v-card>
+            <v-card style="background-color: #161d31;" class="white--text">
                 <v-card-title>
                     <span class="headline">Edit CKP</span>
                 </v-card-title>
@@ -247,46 +249,46 @@
 
                             <v-col cols="12" sm="6">
 
-                                <v-select v-if="this.user.jabatan_id == 2" v-model="edited_jenis_bidang" :items="bidang" :error-messages="edited_jenis_bidangErrors"
+                                <v-select dark v-if="this.user.jabatan_id == 2" v-model="edited_jenis_bidang" :items="bidang" :error-messages="edited_jenis_bidangErrors"
                             label="Kegiatan Bidang *" required @change="$v.edited_jenis_bidang.$touch()"
                             @blur="$v.edited_jenis_bidang.$touch()"></v-select>
 
-                                <v-select v-model="edited_jenis_kegiatan" :items="items"
+                                <v-select dark v-model="edited_jenis_kegiatan" :items="items"
                                     :error-messages="edited_jenis_kegiatanErrors" label="Jenis Kegiatan *" required
                                     @change="$v.edited_jenis_kegiatan.$touch()"
                                     @blur="$v.edited_jenis_kegiatan.$touch()" ></v-select>
 
-                                <v-text-field v-model="edited_uraian_kegiatan"
+                                <v-text-field dark v-model="edited_uraian_kegiatan"
                                     :error-messages="edited_uraian_kegiatanErrors" label="Uraian Kegiatan *" required
                                     @input="$v.edited_uraian_kegiatan.$touch()"
                                     @blur="$v.edited_uraian_kegiatan.$touch()"></v-text-field>
 
-                                <v-text-field v-model="edited_satuan" :error-messages="edited_satuanErrors"
+                                <v-text-field dark v-model="edited_satuan" :error-messages="edited_satuanErrors"
                                     label="Satuan *" required @input="$v.edited_satuan.$touch()"
                                     @blur="$v.edited_satuan.$touch()"></v-text-field>
 
-                                <v-text-field v-model="edited_target_kuantitas"
+                                <v-text-field dark v-model="edited_target_kuantitas"
                                     :error-messages="edited_target_kuantitasErrors" label="Target Kuantitas *" required
                                     @input="$v.edited_target_kuantitas.$touch()"
                                     @blur="$v.edited_target_kuantitas.$touch()"></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6">
-                                <v-text-field v-model="edited_kode_butir_kegiatan" label="Kode Butir Kegiatan">
+                                <v-text-field dark v-model="edited_kode_butir_kegiatan" label="Kode Butir Kegiatan">
                                 </v-text-field>
 
-                                <v-text-field v-model="edited_angka_kredit" label="Angka Kredit"></v-text-field>
+                                <v-text-field dark v-model="edited_angka_kredit" label="Angka Kredit"></v-text-field>
 
-                                <v-text-field v-model="edited_keterangan" label="Keterangan"></v-text-field>
+                                <v-text-field dark v-model="edited_keterangan" label="Keterangan"></v-text-field>
 
                             </v-col>
                         </v-row>
                     </v-container>
-                    <small>*indicates required field</small>
+                    <small style="color: white;">*indicates required field</small>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="edit_dialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="updateCkp()">Save</v-btn>
+                    <v-btn style="background-color: #ea5455;color:white;" text @click="edit_dialog = false">Close</v-btn>
+                    <v-btn style="background-color: #7367f0;color:white;" text @click="updateCkp()">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -295,7 +297,7 @@
         <v-dialog v-model="realisasi_dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
 
             <v-card>
-                <v-toolbar dark color="primary">
+                <v-toolbar dark color="#7367f0">
                     <v-btn icon dark @click="realisasi_dialog = false">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
@@ -305,7 +307,7 @@
                         <v-btn  dark text @click="submitRealissai()" >Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
-                <v-list three-line subheader v-for="(item, index) in this.ckpt_view" :key="index">
+                <v-list style="background-color: #161d31;" three-line subheader v-for="(item, index) in this.ckpt_view" :key="index">
                     <!-- <v-subheader>User Controls</v-subheader> -->
 
                     <v-list-item >
@@ -314,29 +316,29 @@
                             <v-list-item-subtitle>Set the content filtering level to restrict apps that can be
                                 downloaded</v-list-item-subtitle>
                         </v-list-item-content> -->
-                            <v-container>
+                            <v-container style="">
                                
                                 <v-row>
 
-                                    <v-col cols="12" sm="6">
+                                    <v-col cols="12" sm="6" style="color: #b9bbc1;">
                                         <v-list-item-content>
                                             <v-list-item-title>Jenis Kegiatan</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.jenis_kegiatan}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{item.jenis_kegiatan}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                         <v-list-item-content>
                                             <v-list-item-title>Uraian Kegiatan</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.uraian_kegiatan}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{item.uraian_kegiatan}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                         <v-list-item-content>
                                             <v-list-item-title>Satuan</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.satuan}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{item.satuan}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                         <v-list-item-content>
                                             <v-list-item-title>Target Kuantitas</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.target_kuantitas}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{item.target_kuantitas}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                         <!-- <v-select v-model="edited_jenis_kegiatan" :items="items"
@@ -358,13 +360,13 @@
                                             @input="$v.edited_target_kuantitas.$touch()"
                                             @blur="$v.edited_target_kuantitas.$touch()"></v-text-field> -->
                                     </v-col>
-                                    <v-col cols="12" sm="6">
+                                    <v-col cols="12" sm="6" style="color: #b9bbc1;">
                                          <v-list-item-content>
                                             <v-list-item-title>Persentase</v-list-item-title>
-                                            <v-list-item-subtitle>{{persentase(item)}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{persentase(item)}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
-                                        <v-text-field v-model="item.realisasi" label="Realisasi">
+                                        <v-text-field dark v-model="item.realisasi" label="Realisasi">
                                         </v-text-field>
 
 
@@ -377,14 +379,15 @@
 
                             
                     </v-list-item>
-                    <v-divider></v-divider>
+                    <v-divider style="background-color: #283046;"></v-divider>
                 </v-list>
-                <v-row justify="center">
+                <v-row justify="center" style="background-color: #161d31;">
                     <br><br><br><br>
 
-                    <v-btn small class="ma-2" tile outlined color="primary" @click="submitRealissai()" >
+                    <v-btn small class="ma-2" tile outlined color="#7367f0" @click="submitRealissai()" >
                                 <v-icon left>mdi-zip-disk</v-icon> Save
                             </v-btn>
+                            <br><br>
                 </v-row>
               
             </v-card>
@@ -393,20 +396,20 @@
         <!-- copy -->
         <v-dialog v-model="copy_dialog" persistent max-width="290">
             
-            <v-card>
+            <v-card style="background-color: #161d31">
                 <v-container>
-                <v-card-title class="headline">Dari Bulan Apa ?</v-card-title>
+                <v-card-title class="headline white--text">Dari Bulan Apa ?</v-card-title>
 
-               <v-select :items="daftar_bulan_view" label="Bulan" v-model="bulan_copy" @input="pilihBulan(bulan_copy)"></v-select>
+               <v-select dark :items="daftar_bulan_view" label="Bulan" v-model="bulan_copy" @input="pilihBulan(bulan_copy)"></v-select>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn color="red darken-1" text @click="copy_dialog = false">
+                    <v-btn style="background-color: #ea5455;color:white;" text @click="copy_dialog = false">
                         Ngga jadi deh
                     </v-btn>
 
-                    <v-btn color="green darken-1" text @click="submitCopy(bulan_copy)">
+                    <v-btn style="background-color: #7367f0;color:white;" text @click="submitCopy(bulan_copy)">
                         Copy :)
                     </v-btn>
                 </v-card-actions>
@@ -416,20 +419,22 @@
 
          <v-dialog v-model="alertTtd" max-width="290">
             
-            <v-card>
+            <v-card color="#161d31">
                 <v-container>
-                <v-card-title class="headline">Pengumuman</v-card-title>
+                <v-card-title class="headline" style="color: white;">Pengumuman</v-card-title>
+                <div style="color: white;">
                 Halo semuanya, jangan lupa untuk upload scan tanda tangan dengan format .png di menu settings. Terima kasih, selamat beraktivitas :)
+                </div>
                <!-- <v-select :items="daftar_bulan_view" label="Bulan" v-model="bulan_copy" @input="pilihBulan(bulan_copy)"></v-select> -->
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn color="red darken-1" text @click="alertTtd = false">
+                    <v-btn style="background-color: #ea5455;color:white;" text @click="alertTtd = false">
                         Close
                     </v-btn> 
 
-                    <v-btn color="green darken-1" text @click="goTo()">
+                    <v-btn style="background-color: #28c76f;color: white;" text @click="goTo()">
                         Settings
                     </v-btn>
                 </v-card-actions>
@@ -1056,7 +1061,7 @@
 
 
 
-                        axios.delete('/ckpt_delete/' + element.id + '/delete', {
+                        await axios.delete('/ckpt_delete/' + element.id + '/delete', {
                             ckpt: item,
                         })
                         this.ckpt_view.splice(index, 1)

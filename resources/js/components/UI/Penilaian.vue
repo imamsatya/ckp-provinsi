@@ -10,8 +10,8 @@
             <v-hover  v-slot:default="{ hover }"
         open-delay="200">
                 
-                    <v-card  class="pa-md-4 mx-lg-auto" :elevation="hover ? 24 : 6">
-                        <v-select :items="pilihan_pegawai" name="name" item-text="name" item-value="id" label="Pilih Pegawai" v-model="pegawai" @input="pilihPegawai(pegawai)"></v-select>
+                    <v-card style="background-color: #283046;" class="pa-md-4 mx-lg-auto" :elevation="hover ? 24 : 6">
+                        <v-select dark  style="color: white;":items="pilihan_pegawai" name="name" item-text="name" item-value="id" label="Pilih Pegawai" v-model="pegawai" @input="pilihPegawai(pegawai)"></v-select>
                     </v-card>
               
             </v-hover>
@@ -20,22 +20,22 @@
          <v-container fluid>
             <v-hover v-slot:default="{ hover }">
                
-                    <v-card class="pa-md-4 mx-lg-auto raised" :elevation="hover ? 24 : 6">
+                    <v-card style="background-color: #283046;" class="pa-md-4 mx-lg-auto raised" :elevation="hover ? 24 : 6">
                         <v-row dense>
 
 
                             <v-col cols="12">
-                                <v-card-title class="primary--text">
-                                      <v-icon large color="primary">mdi-account-tie</v-icon> Daftar CKP {{selected_pegawai}}
+                                <v-card-title class="white--text">
+                                      <v-icon large color="#7367f0">mdi-account-tie</v-icon> Daftar CKP {{selected_pegawai}}
                                     <v-spacer></v-spacer>
-                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                                    <v-text-field dark v-model="search" append-icon="mdi-magnify" label="Search" single-line
                                         hide-details></v-text-field>
 
                                 </v-card-title>
                                 
                                 <!-- {{ this.ckpt_view }} -->
                                 <!-- loading loading-text="Loading... Please wait" -->
-                                <v-data-table :headers="headers2" :items="daftar_bulan_view" class="elevation-1" :search="search">
+                                <v-data-table dark style="background-color: #161d31; color: white;" :headers="headers2" :items="daftar_bulan_view" class="elevation-1" :search="search">
                                 
                                     <template v-slot:item.jenis_kegiatan="{ item }">
 
@@ -53,7 +53,7 @@
                                         </v-btn> -->
                                         <v-tooltip bottom>
                                             <template v-slot:activator="{ on }">
-                                                <v-icon  color="primary" @click="showCkp(item)" v-on="on">mdi-eye</v-icon>
+                                                <v-icon  color="#7367f0" @click="showCkp(item)" v-on="on">mdi-eye</v-icon>
                                             </template>
                                             <span>Lihat CKP Bulan ini</span>
                                         </v-tooltip>
@@ -79,13 +79,13 @@
         <br>
         <v-container fluid>
             <v-hover v-slot:default="{ hover }">
-            <v-card class="pa-md-4 mx-lg-auto raised" :elevation="hover ? 24 : 6">
+            <v-card style="background-color: #283046;" class="pa-md-4 mx-lg-auto raised" :elevation="hover ? 24 : 6">
                 <v-row dense>
 
 
                     <v-col cols="12">
-                        <v-card-title class="primary--text">
-                            <v-icon large color="primary">mdi-account-tie</v-icon>Daftar CKP {{selected_pegawai}}
+                        <v-card-title class="white--text">
+                            <v-icon large color="#7367f0">mdi-account-tie</v-icon>Daftar CKP {{selected_pegawai}}
                             <!-- <br>
                             <v-btn class="ma-2" tile outlined color="success">
                             <v-icon left>mdi-pencil</v-icon> Edit
@@ -95,12 +95,12 @@
                                 hide-details></v-text-field> -->
 
                         </v-card-title>
-                        <v-card-title class="primary--text">
-                             <v-icon large color="primary">mdi-numeric-9-plus-box-multiple-outline</v-icon> Nilai CKP : {{ratarata_ckp_view}} 
+                        <v-card-title class="white--text">
+                             <v-icon large color="#7367f0">mdi-numeric-9-plus-box-multiple-outline</v-icon> Nilai CKP : {{ratarata_ckp_view}} 
                         </v-card-title>
                         <v-card-title>
 
-                            <v-btn small class="ma-2" tile outlined color="primary" @click="realisasiDialog()">
+                            <v-btn small class="ma-2" tile outlined color="#7367f0" @click="realisasiDialog()">
                                 <v-icon left>mdi-pencil</v-icon> Penilaian
                             </v-btn>
                               <!-- <v-btn small class="ma-2" tile outlined color="success" @click="downloadExcel()">
@@ -108,13 +108,13 @@
                             </v-btn> -->
                             
                             <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                            <v-text-field dark v-model="search" append-icon="mdi-magnify" label="Search" single-line
                                 hide-details></v-text-field>
 
                         </v-card-title>
                         <!-- {{ this.ckpt_view }} -->
                         <!-- loading loading-text="Loading... Please wait" -->
-                       <v-data-table :headers="headers" :items="ckpt_view" class="elevation-1" :search="search">
+                       <v-data-table dark style="background-color: #161d31; color: white;" :headers="headers" :items="ckpt_view" class="elevation-1" :search="search">
                            
                             <template v-slot:item.jenis_kegiatan="{ item }">
 
@@ -246,8 +246,8 @@
         <!-- penilaian -->
         <v-dialog v-model="realisasi_dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
 
-            <v-card>
-                <v-toolbar dark color="primary">
+            <v-card style="background-color: #161d31">
+                <v-toolbar dark color="#7367f0">
                     <v-btn icon dark @click="realisasi_dialog = false">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
@@ -257,42 +257,44 @@
                         <v-btn dark text @click="submitPenilaian()">Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
-                <v-list three-line subheader v-for="(item, index) in this.ckpt_view" :key="index">
+                <v-list style="background-color: #161d31" three-line subheader v-for="(item, index) in this.ckpt_view" :key="index">
                     <!-- <v-subheader>User Controls</v-subheader> -->
 
                     <v-list-item >
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="3">
+                                    <v-col cols="12" sm="3" style="color: #b9bbc1;">
                                         <v-list-item-content>
-                                            <v-list-item-title>Jenis Kegiatan</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.jenis_kegiatan}}</v-list-item-subtitle>
+                                            <v-list-item-title >Jenis Kegiatan</v-list-item-title>
+                                            <v-list-item-subtitle style="color: white;">{{item.jenis_kegiatan}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                         <v-list-item-content>
                                             <v-list-item-title>Uraian Kegiatan</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.uraian_kegiatan}}</v-list-item-subtitle>
+                                            <p style="color: white;">{{item.uraian_kegiatan}} </p>
+                                        
+                                            <!-- <v-list-item-subtitle style="color: white;">{{item.uraian_kegiatan}}</v-list-item-subtitle> -->
                                         </v-list-item-content>
 
                                          <v-list-item-content>
                                             <v-list-item-title>Satuan</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.satuan}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{item.satuan}}</v-list-item-subtitle>
                                         </v-list-item-content>
                                     </v-col>
-                                     <v-col cols="12" sm="3">
+                                     <v-col cols="12" sm="3" style="color: #b9bbc1;">
                                         <v-list-item-content>
                                             <v-list-item-title>Target Kuantitas</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.target_kuantitas}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{item.target_kuantitas}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                          <v-list-item-content>
                                             <v-list-item-title>Realisasi</v-list-item-title>
-                                            <v-list-item-subtitle>{{item.realisasi}}</v-list-item-subtitle>
+                                            <v-list-item-subtitle style="color: white;">{{item.realisasi}}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                     </v-col>
-                                    <v-col cols="12" sm="6">
-                                        <v-text-field v-model="item.kualitas" label="Kualitas X" type="number" :rules="rules"  min=0 max=100>
+                                    <v-col cols="12" sm="6" style="color: #b9bbc1;">
+                                        <v-text-field dark v-model="item.kualitas" label="Kualitas" type="number" :rules="rules"  min=0 max=100>
                                         </v-text-field>
 
                                        
@@ -303,7 +305,7 @@
 
                             
                     </v-list-item>
-                    <v-divider></v-divider>
+                    <v-divider style="background-color: #283046;"></v-divider>
                 </v-list>
                 <v-row justify="center">
                     <br><br><br><br>

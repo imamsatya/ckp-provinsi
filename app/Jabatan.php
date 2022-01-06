@@ -13,5 +13,8 @@ class Jabatan extends Model
         'jabatan_kantor', 'role', 'created_at'
     ];
     
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

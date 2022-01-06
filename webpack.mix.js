@@ -14,9 +14,15 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
        .sourceMaps();
+       mix.browserSync('127.0.0.1:8000');
+         //  mix.browserSync('10.72.10.164:8000');
 
-// mix.webpackConfig({
-//     output: {
-//         chunkFilename: 'js/vuejs_code_split/[name].js',
-//     }
-// });
+mix.webpackConfig({
+    output: {
+        chunkFilename: 'js/vuejs_code_split/[name].js',
+    }
+});
+
+// mix.extract(
+//   ['vue', 'axios', 'vuetify', 'vuelidate', 'jquery', 'lodash', 'popper.js', 'bootstrap', 'vuex']
+// );

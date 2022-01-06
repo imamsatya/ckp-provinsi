@@ -40,7 +40,7 @@ import { store } from './store/store'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('s-layout', require('./components/UI/SLayout.vue').default);
 Vue.component('s-ckp', require('./components/UI/CKP.vue').default);
@@ -51,6 +51,11 @@ Vue.component('s-penilaian', require('./components/UI/Penilaian.vue').default);
 Vue.component('s-settings', require('./components/UI/Settings.vue').default);
 Vue.component('s-about', require('./components/UI/About.vue').default);
 Vue.component('s-footer', require('./components/UI/Footer.vue').default);
+
+//admin
+Vue.component('s-admin', require('./components/UI/Admin.vue').default);
+Vue.component('s-ckprecords', require('./components/UI/CKPrecords.vue').default);
+
 
 
 // Vue.component('s-layout', () => import('./components/UI/SLayout.vue'));
